@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Francisco Izquierdo(Universidade do Minho)
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="sgs.Utilizador" table="Utilizador" lazy="false" discriminator-value="Utilizador">
+		<id name="Email" column="Email" type="string">
+			<generator class="assigned">
+			</generator>
+		</id>
+		<discriminator column="Discriminator" type="string"/>
+		<property name="Nome" column="Nome" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="Idade" column="Idade" type="integer" length="10" not-null="false" lazy="false"/>
+		<property name="Numero" column="Numero" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="Senha" column="Senha" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="Genero" column="Genero" type="character" length="1" not-null="true" lazy="false"/>
+		<subclass name="sgs.Aluno" discriminator-value="Aluno" lazy="false">
+			<many-to-one name="curso" cascade="lock" column="CursoCodigo" class="sgs.Curso" not-null="false" lazy="proxy" access="field">
+			</many-to-one>
+			<property name="Ano" column="Ano" type="integer" length="10" not-null="false" lazy="false"/>
+			<set name="ORM_Disciplinas" table="Disciplina_Utilizador" lazy="true" cascade="save-update,lock" inverse="false">
+				<key column="UtilizadorEmail" not-null="true"/>
+				<many-to-many column="DisciplinaCodigo" class="sgs.Disciplina">
+				</many-to-many>
+			</set>
+		</subclass>
+		<subclass name="sgs.Docente" discriminator-value="Docente" lazy="false">
+			<property name="Departamento" column="Departamento" type="string" length="255" not-null="false" lazy="false"/>
+		</subclass>
+	</class>
+</hibernate-mapping>

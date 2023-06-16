@@ -1,0 +1,488 @@
+2023-06-16 00:09:38,629 ERROR [io.undertow.request] (default task-1) UT005023: Exception handling request to /SGSWebAplication/WEB-INF/conferenciaManager.jsp: org.apache.jasper.JasperException: JBWEB004062: Unable to compile class for JSP: 
+
+JBWEB004060: An error occurred at line: 247 in the jsp file: /WEB-INF/conferenciaManager.jsp
+The method setValue(Date) in the type FormatDateTag is not applicable for the arguments (long)
+244:                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="nome-<%= row.getCodigo() %>" type="text" value="<%= row.getNome() %>" readonly>
+245:                             </td>
+246:                             <td>
+247:                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="horaInicio-<%= row.getCodigo() %>" type="datetime" value="<fmt:formatDate value='<%= row.getHoraInicio() %>' pattern='yyyy-MM-dd&#39;T&#39;HH:mm' />" readonly>
+248:                             </td>
+249:                             <td>
+250:                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="horaFim-<%= row.getCodigo() %>" type="datetime" value="<fmt:formatDate value="<%= row.getHoraFim() %>" pattern="yyyy-MM-dd'T'HH:mm" />" readonly>
+
+
+JBWEB004060: An error occurred at line: 250 in the jsp file: /WEB-INF/conferenciaManager.jsp
+The method setValue(Date) in the type FormatDateTag is not applicable for the arguments (long)
+247:                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="horaInicio-<%= row.getCodigo() %>" type="datetime" value="<fmt:formatDate value='<%= row.getHoraInicio() %>' pattern='yyyy-MM-dd&#39;T&#39;HH:mm' />" readonly>
+248:                             </td>
+249:                             <td>
+250:                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="horaFim-<%= row.getCodigo() %>" type="datetime" value="<fmt:formatDate value="<%= row.getHoraFim() %>" pattern="yyyy-MM-dd'T'HH:mm" />" readonly>
+251:                             </td>
+252:                             <td>
+253:                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="sala-<%= row.getCodigo() %>" type="text" value="<%= row.getSala().getCodigo() %>" readonly>
+
+
+Stacktrace:
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.compiler.DefaultErrorHandler.javacError(DefaultErrorHandler.java:95)
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.compiler.ErrorDispatcher.javacError(ErrorDispatcher.java:198)
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.compiler.JDTCompiler.generateClass(JDTCompiler.java:455)
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.compiler.Compiler.compile(Compiler.java:359)
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.compiler.Compiler.compile(Compiler.java:334)
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.compiler.Compiler.compile(Compiler.java:321)
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.JspCompilationContext.compile(JspCompilationContext.java:652)
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:358)
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:403)
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.servlet.JspServlet.service(JspServlet.java:347)
+	at javax.servlet.api@2.0.0.Final//javax.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletHandler.handleRequest(ServletHandler.java:74)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.ServletSecurityRoleHandler.handleRequest(ServletSecurityRoleHandler.java:62)
+	at io.undertow.jsp@2.0.7.Final//io.undertow.jsp.JspFileHandler.handleRequest(JspFileHandler.java:32)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletChain$1.handleRequest(ServletChain.java:68)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletDispatchingHandler.handleRequest(ServletDispatchingHandler.java:36)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.RedirectDirHandler.handleRequest(RedirectDirHandler.java:68)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.dispatchRequest(ServletInitialHandler.java:251)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.dispatchToPath(ServletInitialHandler.java:186)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.spec.RequestDispatcherImpl.forwardImpl(RequestDispatcherImpl.java:227)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.spec.RequestDispatcherImpl.forwardImplSetup(RequestDispatcherImpl.java:149)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.spec.RequestDispatcherImpl.forward(RequestDispatcherImpl.java:111)
+	at deployment.SGSWebAplication.war//web.conferenciaManager.doGet(conferenciaManager.java:44)
+	at javax.servlet.api@2.0.0.Final//javax.servlet.http.HttpServlet.service(HttpServlet.java:503)
+	at javax.servlet.api@2.0.0.Final//javax.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletHandler.handleRequest(ServletHandler.java:74)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.ServletSecurityRoleHandler.handleRequest(ServletSecurityRoleHandler.java:62)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletChain$1.handleRequest(ServletChain.java:68)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletDispatchingHandler.handleRequest(ServletDispatchingHandler.java:36)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.security.SecurityContextAssociationHandler.handleRequest(SecurityContextAssociationHandler.java:78)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.RedirectDirHandler.handleRequest(RedirectDirHandler.java:68)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.SSLInformationAssociationHandler.handleRequest(SSLInformationAssociationHandler.java:132)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.ServletAuthenticationCallHandler.handleRequest(ServletAuthenticationCallHandler.java:57)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.AbstractConfidentialityHandler.handleRequest(AbstractConfidentialityHandler.java:46)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.ServletConfidentialityConstraintHandler.handleRequest(ServletConfidentialityConstraintHandler.java:64)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.AuthenticationMechanismsHandler.handleRequest(AuthenticationMechanismsHandler.java:60)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.CachedAuthenticatedSessionHandler.handleRequest(CachedAuthenticatedSessionHandler.java:77)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.NotificationReceiverHandler.handleRequest(NotificationReceiverHandler.java:50)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.AbstractSecurityContextAssociationHandler.handleRequest(AbstractSecurityContextAssociationHandler.java:43)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.security.jacc.JACCContextIdHandler.handleRequest(JACCContextIdHandler.java:61)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.GlobalRequestControllerHandler.handleRequest(GlobalRequestControllerHandler.java:68)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:269)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.access$100(ServletInitialHandler.java:78)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler$2.call(ServletInitialHandler.java:133)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler$2.call(ServletInitialHandler.java:130)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.core.ServletRequestContextThreadSetupAction$1.call(ServletRequestContextThreadSetupAction.java:48)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.core.ContextClassLoaderSetupAction$1.call(ContextClassLoaderSetupAction.java:43)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.security.SecurityContextThreadSetupAction.lambda$create$0(SecurityContextThreadSetupAction.java:105)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.dispatchRequest(ServletInitialHandler.java:249)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.access$000(ServletInitialHandler.java:78)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler$1.handleRequest(ServletInitialHandler.java:99)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.Connectors.executeRootHandler(Connectors.java:376)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.HttpServerExchange$1.run(HttpServerExchange.java:830)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.ContextClassLoaderSavingRunnable.run(ContextClassLoaderSavingRunnable.java:35)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.EnhancedQueueExecutor.safeRun(EnhancedQueueExecutor.java:1982)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.EnhancedQueueExecutor$ThreadBody.doRunTask(EnhancedQueueExecutor.java:1486)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1377)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+
+2023-06-16 00:10:31,259 ERROR [io.undertow.request] (default task-1) UT005023: Exception handling request to /SGSWebAplication/WEB-INF/conferenciaManager.jsp: org.apache.jasper.JasperException: JBWEB004062: Unable to compile class for JSP: 
+
+JBWEB004060: An error occurred at line: 247 in the jsp file: /WEB-INF/conferenciaManager.jsp
+The method setValue(Date) in the type FormatDateTag is not applicable for the arguments (long)
+244:                             </td>
+245:                             <td>
+246:                                 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+247:                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="horaInicio-<%= row.getCodigo() %>" type="datetime" value="<fmt:formatDate value='<%= row.getHoraInicio() %>' pattern='yyyy-MM-dd&#39;T&#39;HH:mm' />" readonly>
+248:                             </td>
+249:                             <td>
+250:                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="horaFim-<%= row.getCodigo() %>" type="datetime" value="<fmt:formatDate value="<%= row.getHoraFim() %>" pattern="yyyy-MM-dd'T'HH:mm" />" readonly>
+
+
+JBWEB004060: An error occurred at line: 250 in the jsp file: /WEB-INF/conferenciaManager.jsp
+The method setValue(Date) in the type FormatDateTag is not applicable for the arguments (long)
+247:                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="horaInicio-<%= row.getCodigo() %>" type="datetime" value="<fmt:formatDate value='<%= row.getHoraInicio() %>' pattern='yyyy-MM-dd&#39;T&#39;HH:mm' />" readonly>
+248:                             </td>
+249:                             <td>
+250:                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="horaFim-<%= row.getCodigo() %>" type="datetime" value="<fmt:formatDate value="<%= row.getHoraFim() %>" pattern="yyyy-MM-dd'T'HH:mm" />" readonly>
+251:                             </td>
+252:                             <td>
+253:                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="sala-<%= row.getCodigo() %>" type="text" value="<%= row.getSala().getCodigo() %>" readonly>
+
+
+Stacktrace:
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.compiler.DefaultErrorHandler.javacError(DefaultErrorHandler.java:95)
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.compiler.ErrorDispatcher.javacError(ErrorDispatcher.java:198)
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.compiler.JDTCompiler.generateClass(JDTCompiler.java:455)
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.compiler.Compiler.compile(Compiler.java:359)
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.compiler.Compiler.compile(Compiler.java:334)
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.compiler.Compiler.compile(Compiler.java:321)
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.JspCompilationContext.compile(JspCompilationContext.java:652)
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:358)
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:403)
+	at io.undertow.jsp@2.0.7.Final//org.apache.jasper.servlet.JspServlet.service(JspServlet.java:347)
+	at javax.servlet.api@2.0.0.Final//javax.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletHandler.handleRequest(ServletHandler.java:74)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.ServletSecurityRoleHandler.handleRequest(ServletSecurityRoleHandler.java:62)
+	at io.undertow.jsp@2.0.7.Final//io.undertow.jsp.JspFileHandler.handleRequest(JspFileHandler.java:32)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletChain$1.handleRequest(ServletChain.java:68)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletDispatchingHandler.handleRequest(ServletDispatchingHandler.java:36)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.RedirectDirHandler.handleRequest(RedirectDirHandler.java:68)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.dispatchRequest(ServletInitialHandler.java:251)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.dispatchToPath(ServletInitialHandler.java:186)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.spec.RequestDispatcherImpl.forwardImpl(RequestDispatcherImpl.java:227)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.spec.RequestDispatcherImpl.forwardImplSetup(RequestDispatcherImpl.java:149)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.spec.RequestDispatcherImpl.forward(RequestDispatcherImpl.java:111)
+	at deployment.SGSWebAplication.war//web.conferenciaManager.doGet(conferenciaManager.java:44)
+	at javax.servlet.api@2.0.0.Final//javax.servlet.http.HttpServlet.service(HttpServlet.java:503)
+	at javax.servlet.api@2.0.0.Final//javax.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletHandler.handleRequest(ServletHandler.java:74)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.ServletSecurityRoleHandler.handleRequest(ServletSecurityRoleHandler.java:62)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletChain$1.handleRequest(ServletChain.java:68)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletDispatchingHandler.handleRequest(ServletDispatchingHandler.java:36)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.security.SecurityContextAssociationHandler.handleRequest(SecurityContextAssociationHandler.java:78)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.RedirectDirHandler.handleRequest(RedirectDirHandler.java:68)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.SSLInformationAssociationHandler.handleRequest(SSLInformationAssociationHandler.java:132)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.ServletAuthenticationCallHandler.handleRequest(ServletAuthenticationCallHandler.java:57)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.AbstractConfidentialityHandler.handleRequest(AbstractConfidentialityHandler.java:46)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.ServletConfidentialityConstraintHandler.handleRequest(ServletConfidentialityConstraintHandler.java:64)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.AuthenticationMechanismsHandler.handleRequest(AuthenticationMechanismsHandler.java:60)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.CachedAuthenticatedSessionHandler.handleRequest(CachedAuthenticatedSessionHandler.java:77)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.NotificationReceiverHandler.handleRequest(NotificationReceiverHandler.java:50)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.AbstractSecurityContextAssociationHandler.handleRequest(AbstractSecurityContextAssociationHandler.java:43)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.security.jacc.JACCContextIdHandler.handleRequest(JACCContextIdHandler.java:61)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.GlobalRequestControllerHandler.handleRequest(GlobalRequestControllerHandler.java:68)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:269)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.access$100(ServletInitialHandler.java:78)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler$2.call(ServletInitialHandler.java:133)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler$2.call(ServletInitialHandler.java:130)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.core.ServletRequestContextThreadSetupAction$1.call(ServletRequestContextThreadSetupAction.java:48)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.core.ContextClassLoaderSetupAction$1.call(ContextClassLoaderSetupAction.java:43)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.security.SecurityContextThreadSetupAction.lambda$create$0(SecurityContextThreadSetupAction.java:105)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.dispatchRequest(ServletInitialHandler.java:249)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.access$000(ServletInitialHandler.java:78)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler$1.handleRequest(ServletInitialHandler.java:99)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.Connectors.executeRootHandler(Connectors.java:376)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.HttpServerExchange$1.run(HttpServerExchange.java:830)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.ContextClassLoaderSavingRunnable.run(ContextClassLoaderSavingRunnable.java:35)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.EnhancedQueueExecutor.safeRun(EnhancedQueueExecutor.java:1982)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.EnhancedQueueExecutor$ThreadBody.doRunTask(EnhancedQueueExecutor.java:1486)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1377)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+
+2023-06-16 00:12:47,171 ERROR [io.undertow.request] (default task-1) UT005023: Exception handling request to /SGSWebAplication/conferenciaManager: java.lang.NullPointerException: Cannot invoke "javax.servlet.http.HttpSession.getAttribute(String)" because "session" is null
+	at deployment.SGSWebAplication.war//web.conferenciaManager.doGet(conferenciaManager.java:39)
+	at javax.servlet.api@2.0.0.Final//javax.servlet.http.HttpServlet.service(HttpServlet.java:503)
+	at javax.servlet.api@2.0.0.Final//javax.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletHandler.handleRequest(ServletHandler.java:74)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.ServletSecurityRoleHandler.handleRequest(ServletSecurityRoleHandler.java:62)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletChain$1.handleRequest(ServletChain.java:68)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletDispatchingHandler.handleRequest(ServletDispatchingHandler.java:36)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.security.SecurityContextAssociationHandler.handleRequest(SecurityContextAssociationHandler.java:78)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.RedirectDirHandler.handleRequest(RedirectDirHandler.java:68)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.SSLInformationAssociationHandler.handleRequest(SSLInformationAssociationHandler.java:132)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.ServletAuthenticationCallHandler.handleRequest(ServletAuthenticationCallHandler.java:57)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.AbstractConfidentialityHandler.handleRequest(AbstractConfidentialityHandler.java:46)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.ServletConfidentialityConstraintHandler.handleRequest(ServletConfidentialityConstraintHandler.java:64)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.AuthenticationMechanismsHandler.handleRequest(AuthenticationMechanismsHandler.java:60)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.CachedAuthenticatedSessionHandler.handleRequest(CachedAuthenticatedSessionHandler.java:77)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.NotificationReceiverHandler.handleRequest(NotificationReceiverHandler.java:50)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.AbstractSecurityContextAssociationHandler.handleRequest(AbstractSecurityContextAssociationHandler.java:43)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.security.jacc.JACCContextIdHandler.handleRequest(JACCContextIdHandler.java:61)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.GlobalRequestControllerHandler.handleRequest(GlobalRequestControllerHandler.java:68)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:269)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.access$100(ServletInitialHandler.java:78)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler$2.call(ServletInitialHandler.java:133)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler$2.call(ServletInitialHandler.java:130)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.core.ServletRequestContextThreadSetupAction$1.call(ServletRequestContextThreadSetupAction.java:48)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.core.ContextClassLoaderSetupAction$1.call(ContextClassLoaderSetupAction.java:43)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.security.SecurityContextThreadSetupAction.lambda$create$0(SecurityContextThreadSetupAction.java:105)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.dispatchRequest(ServletInitialHandler.java:249)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.access$000(ServletInitialHandler.java:78)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler$1.handleRequest(ServletInitialHandler.java:99)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.Connectors.executeRootHandler(Connectors.java:376)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.HttpServerExchange$1.run(HttpServerExchange.java:830)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.ContextClassLoaderSavingRunnable.run(ContextClassLoaderSavingRunnable.java:35)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.EnhancedQueueExecutor.safeRun(EnhancedQueueExecutor.java:1982)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.EnhancedQueueExecutor$ThreadBody.doRunTask(EnhancedQueueExecutor.java:1486)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1377)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+
+2023-06-16 00:46:12,274 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-7) WFLYJCA0019: Stopped Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 00:46:12,275 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 111) WFLYUT0022: Unregistered web context: '/SGSWebAplication' from server 'default-server'
+2023-06-16 00:46:12,290 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-3) WFLYSRV0028: Stopped deployment SGSWebAplication.war (runtime-name: SGSWebAplication.war) in 16ms
+2023-06-16 00:46:12,291 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-1) WFLYSRV0027: Starting deployment of "SGSWebAplication.war" (runtime-name: "SGSWebAplication.war")
+2023-06-16 00:46:13,345 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-4) WFLYJCA0005: Deploying non-JDBC-compliant driver class com.mysql.cj.jdbc.Driver (version 8.0)
+2023-06-16 00:46:13,358 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-8) WFLYJCA0018: Started Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 00:46:13,377 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 118) WFLYUT0021: Registered web context: '/SGSWebAplication' for server 'default-server'
+2023-06-16 00:46:13,424 INFO  [org.jboss.as.server] (DeploymentScanner-threads - 1) WFLYSRV0016: Replaced deployment "SGSWebAplication.war" with deployment "SGSWebAplication.war"
+2023-06-16 00:46:18,437 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-6) WFLYJCA0019: Stopped Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 00:46:18,438 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 118) WFLYUT0022: Unregistered web context: '/SGSWebAplication' from server 'default-server'
+2023-06-16 00:46:18,443 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-4) WFLYSRV0028: Stopped deployment SGSWebAplication.war (runtime-name: SGSWebAplication.war) in 5ms
+2023-06-16 00:46:18,444 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-6) WFLYSRV0027: Starting deployment of "SGSWebAplication.war" (runtime-name: "SGSWebAplication.war")
+2023-06-16 00:46:19,208 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-1) WFLYJCA0005: Deploying non-JDBC-compliant driver class com.mysql.cj.jdbc.Driver (version 8.0)
+2023-06-16 00:46:19,219 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-3) WFLYJCA0018: Started Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 00:46:19,232 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 120) WFLYUT0021: Registered web context: '/SGSWebAplication' for server 'default-server'
+2023-06-16 00:46:19,263 INFO  [org.jboss.as.server] (DeploymentScanner-threads - 1) WFLYSRV0016: Replaced deployment "SGSWebAplication.war" with deployment "SGSWebAplication.war"
+2023-06-16 00:46:54,291 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-6) WFLYJCA0019: Stopped Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 00:46:54,292 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 120) WFLYUT0022: Unregistered web context: '/SGSWebAplication' from server 'default-server'
+2023-06-16 00:46:54,297 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-7) WFLYSRV0028: Stopped deployment SGSWebAplication.war (runtime-name: SGSWebAplication.war) in 5ms
+2023-06-16 00:46:54,297 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-8) WFLYSRV0027: Starting deployment of "SGSWebAplication.war" (runtime-name: "SGSWebAplication.war")
+2023-06-16 00:46:55,189 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-7) WFLYJCA0005: Deploying non-JDBC-compliant driver class com.mysql.cj.jdbc.Driver (version 8.0)
+2023-06-16 00:46:55,208 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-1) WFLYJCA0018: Started Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 00:46:55,222 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 126) WFLYUT0021: Registered web context: '/SGSWebAplication' for server 'default-server'
+2023-06-16 00:46:55,250 INFO  [org.jboss.as.server] (DeploymentScanner-threads - 1) WFLYSRV0016: Replaced deployment "SGSWebAplication.war" with deployment "SGSWebAplication.war"
+2023-06-16 00:47:35,798 ERROR [io.undertow.request] (default task-1) UT005023: Exception handling request to /SGSWebAplication/disciplinaManager: java.lang.NullPointerException: Cannot invoke "javax.servlet.http.HttpSession.getAttribute(String)" because "session" is null
+	at deployment.SGSWebAplication.war//web.disciplinaManager.doGet(disciplinaManager.java:39)
+	at javax.servlet.api@2.0.0.Final//javax.servlet.http.HttpServlet.service(HttpServlet.java:503)
+	at javax.servlet.api@2.0.0.Final//javax.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletHandler.handleRequest(ServletHandler.java:74)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.ServletSecurityRoleHandler.handleRequest(ServletSecurityRoleHandler.java:62)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletChain$1.handleRequest(ServletChain.java:68)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletDispatchingHandler.handleRequest(ServletDispatchingHandler.java:36)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.security.SecurityContextAssociationHandler.handleRequest(SecurityContextAssociationHandler.java:78)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.RedirectDirHandler.handleRequest(RedirectDirHandler.java:68)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.SSLInformationAssociationHandler.handleRequest(SSLInformationAssociationHandler.java:132)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.ServletAuthenticationCallHandler.handleRequest(ServletAuthenticationCallHandler.java:57)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.AbstractConfidentialityHandler.handleRequest(AbstractConfidentialityHandler.java:46)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.ServletConfidentialityConstraintHandler.handleRequest(ServletConfidentialityConstraintHandler.java:64)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.AuthenticationMechanismsHandler.handleRequest(AuthenticationMechanismsHandler.java:60)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.CachedAuthenticatedSessionHandler.handleRequest(CachedAuthenticatedSessionHandler.java:77)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.NotificationReceiverHandler.handleRequest(NotificationReceiverHandler.java:50)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.AbstractSecurityContextAssociationHandler.handleRequest(AbstractSecurityContextAssociationHandler.java:43)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.security.jacc.JACCContextIdHandler.handleRequest(JACCContextIdHandler.java:61)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.GlobalRequestControllerHandler.handleRequest(GlobalRequestControllerHandler.java:68)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:269)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.access$100(ServletInitialHandler.java:78)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler$2.call(ServletInitialHandler.java:133)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler$2.call(ServletInitialHandler.java:130)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.core.ServletRequestContextThreadSetupAction$1.call(ServletRequestContextThreadSetupAction.java:48)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.core.ContextClassLoaderSetupAction$1.call(ContextClassLoaderSetupAction.java:43)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.security.SecurityContextThreadSetupAction.lambda$create$0(SecurityContextThreadSetupAction.java:105)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.dispatchRequest(ServletInitialHandler.java:249)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.access$000(ServletInitialHandler.java:78)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler$1.handleRequest(ServletInitialHandler.java:99)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.Connectors.executeRootHandler(Connectors.java:376)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.HttpServerExchange$1.run(HttpServerExchange.java:830)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.ContextClassLoaderSavingRunnable.run(ContextClassLoaderSavingRunnable.java:35)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.EnhancedQueueExecutor.safeRun(EnhancedQueueExecutor.java:1982)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.EnhancedQueueExecutor$ThreadBody.doRunTask(EnhancedQueueExecutor.java:1486)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1377)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+
+2023-06-16 00:47:43,012 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-1) WFLYJCA0019: Stopped Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 00:47:43,013 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 126) WFLYUT0022: Unregistered web context: '/SGSWebAplication' from server 'default-server'
+2023-06-16 00:47:43,021 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-4) WFLYSRV0028: Stopped deployment SGSWebAplication.war (runtime-name: SGSWebAplication.war) in 9ms
+2023-06-16 00:47:43,045 INFO  [org.jboss.as.server] (management-handler-thread - 2) WFLYSRV0009: Undeployed "SGSWebAplication.war" (runtime-name: "SGSWebAplication.war")
+2023-06-16 00:47:45,271 INFO  [org.jboss.as.server.deployment.scanner] (DeploymentScanner-threads - 2) WFLYDS0004: Found SGSWebAplication.war in deployment directory. To trigger deployment create a file called SGSWebAplication.war.dodeploy
+2023-06-16 00:48:05,293 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-4) WFLYSRV0027: Starting deployment of "SGSWebAplication.war" (runtime-name: "SGSWebAplication.war")
+2023-06-16 00:48:06,165 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-1) WFLYJCA0005: Deploying non-JDBC-compliant driver class com.mysql.cj.jdbc.Driver (version 8.0)
+2023-06-16 00:48:06,174 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-4) WFLYJCA0018: Started Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 00:48:06,189 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 144) WFLYUT0021: Registered web context: '/SGSWebAplication' for server 'default-server'
+2023-06-16 00:48:06,217 INFO  [org.jboss.as.server] (DeploymentScanner-threads - 1) WFLYSRV0010: Deployed "SGSWebAplication.war" (runtime-name : "SGSWebAplication.war")
+2023-06-16 00:48:10,425 INFO  [org.hibernate.Version] (default task-1) HHH000412: Hibernate Core {[WORKING]}
+2023-06-16 00:48:10,426 INFO  [org.hibernate.cfg.Environment] (default task-1) HHH000205: Loaded properties from resource hibernate.properties: {hibernate.format_sql=true, hibernate.jdbc.use_streams_for_binary=true, hibernate.bytecode.use_reflection_optimizer=false, hibernate.query.substitutions=yes 'Y', no 'N', hibernate.cache.region_prefix=hibernate.test, hibernate.max_fetch_depth=1, hibernate.connection.pool_size=1, hibernate.cache.region.factory_class=org.hibernate.cache.internal.NoCachingRegionFactory, hibernate.proxool.pool_alias=pool1, hibernate.jdbc.batch_versioned_data=true}
+2023-06-16 00:48:10,427 INFO  [org.hibernate.cfg.Environment] (default task-1) HHH000407: Using java.io streams to persist binary types
+2023-06-16 00:48:10,427 INFO  [org.hibernate.cfg.Environment] (default task-1) HHH000021: Bytecode provider name : javassist
+2023-06-16 00:48:10,517 WARN  [org.hibernate.engine.jdbc.connections.internal.ConnectionProviderInitiator] (default task-1) HHH000209: proxool properties were encountered, but the proxool provider class was not found on the classpath; these properties are going to be ignored.
+2023-06-16 00:48:10,519 WARN  [org.hibernate.orm.connections.pooling] (default task-1) HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2023-06-16 00:48:10,520 INFO  [org.hibernate.orm.connections.pooling] (default task-1) HHH10001005: using driver [com.mysql.cj.jdbc.Driver] at URL [jdbc:mysql://localhost/sgs_aa_sic]
+2023-06-16 00:48:10,520 INFO  [org.hibernate.orm.connections.pooling] (default task-1) HHH10001001: Connection properties: {password=****, user=root}
+2023-06-16 00:48:10,520 INFO  [org.hibernate.orm.connections.pooling] (default task-1) HHH10001003: Autocommit mode: false
+2023-06-16 00:48:10,521 INFO  [org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl] (default task-1) HHH000115: Hibernate connection pool size: 1 (min=1)
+2023-06-16 00:48:10,642 INFO  [org.hibernate.dialect.Dialect] (default task-1) HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2023-06-16 00:48:10,721 INFO  [org.hibernate.annotations.common.Version] (default task-1) HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2023-06-16 00:48:10,980 INFO  [org.hibernate.dialect.Dialect] (default task-1) HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2023-06-16 00:48:12,045 INFO  [org.hibernate.hql.internal.QueryTranslatorFactoryInitiator] (default task-1) HHH000397: Using ASTQueryTranslatorFactory
+2023-06-16 00:50:36,292 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-2) WFLYJCA0019: Stopped Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 00:50:36,300 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 145) WFLYUT0022: Unregistered web context: '/SGSWebAplication' from server 'default-server'
+2023-06-16 00:50:36,312 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-2) WFLYSRV0028: Stopped deployment SGSWebAplication.war (runtime-name: SGSWebAplication.war) in 20ms
+2023-06-16 00:50:36,313 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-2) WFLYSRV0027: Starting deployment of "SGSWebAplication.war" (runtime-name: "SGSWebAplication.war")
+2023-06-16 00:50:37,090 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-4) WFLYJCA0005: Deploying non-JDBC-compliant driver class com.mysql.cj.jdbc.Driver (version 8.0)
+2023-06-16 00:50:37,098 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-4) WFLYJCA0018: Started Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 00:50:37,110 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 150) WFLYUT0021: Registered web context: '/SGSWebAplication' for server 'default-server'
+2023-06-16 00:50:37,137 INFO  [org.jboss.as.server] (DeploymentScanner-threads - 2) WFLYSRV0016: Replaced deployment "SGSWebAplication.war" with deployment "SGSWebAplication.war"
+2023-06-16 00:57:32,291 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-7) WFLYJCA0019: Stopped Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 00:57:32,292 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 150) WFLYUT0022: Unregistered web context: '/SGSWebAplication' from server 'default-server'
+2023-06-16 00:57:32,298 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-2) WFLYSRV0028: Stopped deployment SGSWebAplication.war (runtime-name: SGSWebAplication.war) in 6ms
+2023-06-16 00:57:32,298 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-7) WFLYSRV0027: Starting deployment of "SGSWebAplication.war" (runtime-name: "SGSWebAplication.war")
+2023-06-16 00:57:33,102 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-3) WFLYJCA0005: Deploying non-JDBC-compliant driver class com.mysql.cj.jdbc.Driver (version 8.0)
+2023-06-16 00:57:33,110 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-2) WFLYJCA0018: Started Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 00:57:33,123 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 162) WFLYUT0021: Registered web context: '/SGSWebAplication' for server 'default-server'
+2023-06-16 00:57:33,153 INFO  [org.jboss.as.server] (DeploymentScanner-threads - 2) WFLYSRV0016: Replaced deployment "SGSWebAplication.war" with deployment "SGSWebAplication.war"
+2023-06-16 01:01:23,248 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-6) WFLYJCA0019: Stopped Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 01:01:23,249 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 163) WFLYUT0022: Unregistered web context: '/SGSWebAplication' from server 'default-server'
+2023-06-16 01:01:23,256 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-6) WFLYSRV0028: Stopped deployment SGSWebAplication.war (runtime-name: SGSWebAplication.war) in 8ms
+2023-06-16 01:01:23,257 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-5) WFLYSRV0027: Starting deployment of "SGSWebAplication.war" (runtime-name: "SGSWebAplication.war")
+2023-06-16 01:01:24,098 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-6) WFLYJCA0005: Deploying non-JDBC-compliant driver class com.mysql.cj.jdbc.Driver (version 8.0)
+2023-06-16 01:01:24,107 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-6) WFLYJCA0018: Started Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 01:01:24,119 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 170) WFLYUT0021: Registered web context: '/SGSWebAplication' for server 'default-server'
+2023-06-16 01:01:24,146 INFO  [org.jboss.as.server] (DeploymentScanner-threads - 2) WFLYSRV0016: Replaced deployment "SGSWebAplication.war" with deployment "SGSWebAplication.war"
+2023-06-16 01:01:29,162 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-4) WFLYJCA0019: Stopped Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 01:01:29,162 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 170) WFLYUT0022: Unregistered web context: '/SGSWebAplication' from server 'default-server'
+2023-06-16 01:01:29,167 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-5) WFLYSRV0028: Stopped deployment SGSWebAplication.war (runtime-name: SGSWebAplication.war) in 5ms
+2023-06-16 01:01:29,168 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-4) WFLYSRV0027: Starting deployment of "SGSWebAplication.war" (runtime-name: "SGSWebAplication.war")
+2023-06-16 01:01:29,954 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-2) WFLYJCA0005: Deploying non-JDBC-compliant driver class com.mysql.cj.jdbc.Driver (version 8.0)
+2023-06-16 01:01:29,961 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-4) WFLYJCA0018: Started Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 01:01:29,972 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 166) WFLYUT0021: Registered web context: '/SGSWebAplication' for server 'default-server'
+2023-06-16 01:01:30,002 INFO  [org.jboss.as.server] (DeploymentScanner-threads - 2) WFLYSRV0016: Replaced deployment "SGSWebAplication.war" with deployment "SGSWebAplication.war"
+2023-06-16 01:01:31,912 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-2) WFLYJCA0019: Stopped Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 01:01:31,912 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 166) WFLYUT0022: Unregistered web context: '/SGSWebAplication' from server 'default-server'
+2023-06-16 01:01:31,918 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-6) WFLYSRV0028: Stopped deployment SGSWebAplication.war (runtime-name: SGSWebAplication.war) in 6ms
+2023-06-16 01:01:31,942 INFO  [org.jboss.as.server] (management-handler-thread - 2) WFLYSRV0009: Undeployed "SGSWebAplication.war" (runtime-name: "SGSWebAplication.war")
+2023-06-16 01:01:35,014 INFO  [org.jboss.as.server.deployment.scanner] (DeploymentScanner-threads - 1) WFLYDS0004: Found SGSWebAplication.war in deployment directory. To trigger deployment create a file called SGSWebAplication.war.dodeploy
+2023-06-16 01:01:35,019 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-1) WFLYSRV0027: Starting deployment of "SGSWebAplication.war" (runtime-name: "SGSWebAplication.war")
+2023-06-16 01:01:35,883 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-1) WFLYJCA0005: Deploying non-JDBC-compliant driver class com.mysql.cj.jdbc.Driver (version 8.0)
+2023-06-16 01:01:35,892 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-4) WFLYJCA0018: Started Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 01:01:35,904 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 170) WFLYUT0021: Registered web context: '/SGSWebAplication' for server 'default-server'
+2023-06-16 01:01:35,932 INFO  [org.jboss.as.server] (DeploymentScanner-threads - 2) WFLYSRV0010: Deployed "SGSWebAplication.war" (runtime-name : "SGSWebAplication.war")
+2023-06-16 01:04:03,004 INFO  [org.hibernate.Version] (default task-1) HHH000412: Hibernate Core {[WORKING]}
+2023-06-16 01:04:03,005 INFO  [org.hibernate.cfg.Environment] (default task-1) HHH000205: Loaded properties from resource hibernate.properties: {hibernate.format_sql=true, hibernate.jdbc.use_streams_for_binary=true, hibernate.bytecode.use_reflection_optimizer=false, hibernate.query.substitutions=yes 'Y', no 'N', hibernate.cache.region_prefix=hibernate.test, hibernate.max_fetch_depth=1, hibernate.connection.pool_size=1, hibernate.cache.region.factory_class=org.hibernate.cache.internal.NoCachingRegionFactory, hibernate.proxool.pool_alias=pool1, hibernate.jdbc.batch_versioned_data=true}
+2023-06-16 01:04:03,005 INFO  [org.hibernate.cfg.Environment] (default task-1) HHH000407: Using java.io streams to persist binary types
+2023-06-16 01:04:03,006 INFO  [org.hibernate.cfg.Environment] (default task-1) HHH000021: Bytecode provider name : javassist
+2023-06-16 01:04:03,087 WARN  [org.hibernate.engine.jdbc.connections.internal.ConnectionProviderInitiator] (default task-1) HHH000209: proxool properties were encountered, but the proxool provider class was not found on the classpath; these properties are going to be ignored.
+2023-06-16 01:04:03,088 WARN  [org.hibernate.orm.connections.pooling] (default task-1) HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2023-06-16 01:04:03,088 INFO  [org.hibernate.orm.connections.pooling] (default task-1) HHH10001005: using driver [com.mysql.cj.jdbc.Driver] at URL [jdbc:mysql://localhost/sgs_aa_sic]
+2023-06-16 01:04:03,088 INFO  [org.hibernate.orm.connections.pooling] (default task-1) HHH10001001: Connection properties: {password=****, user=root}
+2023-06-16 01:04:03,088 INFO  [org.hibernate.orm.connections.pooling] (default task-1) HHH10001003: Autocommit mode: false
+2023-06-16 01:04:03,089 INFO  [org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl] (default task-1) HHH000115: Hibernate connection pool size: 1 (min=1)
+2023-06-16 01:04:03,190 INFO  [org.hibernate.dialect.Dialect] (default task-1) HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2023-06-16 01:04:03,257 INFO  [org.hibernate.annotations.common.Version] (default task-1) HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2023-06-16 01:04:03,481 INFO  [org.hibernate.dialect.Dialect] (default task-1) HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2023-06-16 01:04:10,056 INFO  [org.hibernate.hql.internal.QueryTranslatorFactoryInitiator] (default task-1) HHH000397: Using ASTQueryTranslatorFactory
+2023-06-16 01:09:31,226 ERROR [io.undertow.request] (default task-1) UT005023: Exception handling request to /SGSWebAplication/WEB-INF/salaInfo.jsp: java.lang.IndexOutOfBoundsException: Index 4 out of bounds for length 4
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:64)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:70)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:266)
+	at java.base/java.util.Objects.checkIndex(Objects.java:359)
+	at java.base/java.util.ArrayList.get(ArrayList.java:427)
+	at deployment.SGSWebAplication.war//web.salaInfo.doGet(salaInfo.java:78)
+	at javax.servlet.api@2.0.0.Final//javax.servlet.http.HttpServlet.service(HttpServlet.java:503)
+	at javax.servlet.api@2.0.0.Final//javax.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletHandler.handleRequest(ServletHandler.java:74)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.ServletSecurityRoleHandler.handleRequest(ServletSecurityRoleHandler.java:62)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletChain$1.handleRequest(ServletChain.java:68)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletDispatchingHandler.handleRequest(ServletDispatchingHandler.java:36)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.security.SecurityContextAssociationHandler.handleRequest(SecurityContextAssociationHandler.java:78)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.RedirectDirHandler.handleRequest(RedirectDirHandler.java:68)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.SSLInformationAssociationHandler.handleRequest(SSLInformationAssociationHandler.java:132)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.ServletAuthenticationCallHandler.handleRequest(ServletAuthenticationCallHandler.java:57)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.AbstractConfidentialityHandler.handleRequest(AbstractConfidentialityHandler.java:46)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.ServletConfidentialityConstraintHandler.handleRequest(ServletConfidentialityConstraintHandler.java:64)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.AuthenticationMechanismsHandler.handleRequest(AuthenticationMechanismsHandler.java:60)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.security.CachedAuthenticatedSessionHandler.handleRequest(CachedAuthenticatedSessionHandler.java:77)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.NotificationReceiverHandler.handleRequest(NotificationReceiverHandler.java:50)
+	at io.undertow.core@2.0.27.Final//io.undertow.security.handlers.AbstractSecurityContextAssociationHandler.handleRequest(AbstractSecurityContextAssociationHandler.java:43)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.security.jacc.JACCContextIdHandler.handleRequest(JACCContextIdHandler.java:61)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.GlobalRequestControllerHandler.handleRequest(GlobalRequestControllerHandler.java:68)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:269)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.access$100(ServletInitialHandler.java:78)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler$2.call(ServletInitialHandler.java:133)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler$2.call(ServletInitialHandler.java:130)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.core.ServletRequestContextThreadSetupAction$1.call(ServletRequestContextThreadSetupAction.java:48)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.core.ContextClassLoaderSetupAction$1.call(ContextClassLoaderSetupAction.java:43)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.security.SecurityContextThreadSetupAction.lambda$create$0(SecurityContextThreadSetupAction.java:105)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at org.wildfly.extension.undertow@18.0.1.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1504)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.dispatchRequest(ServletInitialHandler.java:249)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler.access$000(ServletInitialHandler.java:78)
+	at io.undertow.servlet@2.0.27.Final//io.undertow.servlet.handlers.ServletInitialHandler$1.handleRequest(ServletInitialHandler.java:99)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.Connectors.executeRootHandler(Connectors.java:376)
+	at io.undertow.core@2.0.27.Final//io.undertow.server.HttpServerExchange$1.run(HttpServerExchange.java:830)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.ContextClassLoaderSavingRunnable.run(ContextClassLoaderSavingRunnable.java:35)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.EnhancedQueueExecutor.safeRun(EnhancedQueueExecutor.java:1982)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.EnhancedQueueExecutor$ThreadBody.doRunTask(EnhancedQueueExecutor.java:1486)
+	at org.jboss.threads@2.3.3.Final//org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1377)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+
+2023-06-16 01:10:20,080 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-2) WFLYJCA0019: Stopped Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 01:10:20,081 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 172) WFLYUT0022: Unregistered web context: '/SGSWebAplication' from server 'default-server'
+2023-06-16 01:10:20,097 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-6) WFLYSRV0028: Stopped deployment SGSWebAplication.war (runtime-name: SGSWebAplication.war) in 17ms
+2023-06-16 01:10:20,125 INFO  [org.jboss.as.server] (management-handler-thread - 2) WFLYSRV0009: Undeployed "SGSWebAplication.war" (runtime-name: "SGSWebAplication.war")
+2023-06-16 01:10:21,123 INFO  [org.jboss.as.server.deployment.scanner] (DeploymentScanner-threads - 2) WFLYDS0004: Found SGSWebAplication.war in deployment directory. To trigger deployment create a file called SGSWebAplication.war.dodeploy
+2023-06-16 01:10:26,136 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-6) WFLYSRV0027: Starting deployment of "SGSWebAplication.war" (runtime-name: "SGSWebAplication.war")
+2023-06-16 01:10:27,021 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-8) WFLYJCA0005: Deploying non-JDBC-compliant driver class com.mysql.cj.jdbc.Driver (version 8.0)
+2023-06-16 01:10:27,028 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-8) WFLYJCA0018: Started Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 01:10:27,040 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 181) WFLYUT0021: Registered web context: '/SGSWebAplication' for server 'default-server'
+2023-06-16 01:10:27,068 INFO  [org.jboss.as.server] (DeploymentScanner-threads - 1) WFLYSRV0010: Deployed "SGSWebAplication.war" (runtime-name : "SGSWebAplication.war")
+2023-06-16 01:10:31,711 INFO  [org.hibernate.Version] (default task-1) HHH000412: Hibernate Core {[WORKING]}
+2023-06-16 01:10:31,712 INFO  [org.hibernate.cfg.Environment] (default task-1) HHH000205: Loaded properties from resource hibernate.properties: {hibernate.format_sql=true, hibernate.jdbc.use_streams_for_binary=true, hibernate.bytecode.use_reflection_optimizer=false, hibernate.query.substitutions=yes 'Y', no 'N', hibernate.cache.region_prefix=hibernate.test, hibernate.max_fetch_depth=1, hibernate.connection.pool_size=1, hibernate.cache.region.factory_class=org.hibernate.cache.internal.NoCachingRegionFactory, hibernate.proxool.pool_alias=pool1, hibernate.jdbc.batch_versioned_data=true}
+2023-06-16 01:10:31,712 INFO  [org.hibernate.cfg.Environment] (default task-1) HHH000407: Using java.io streams to persist binary types
+2023-06-16 01:10:31,712 INFO  [org.hibernate.cfg.Environment] (default task-1) HHH000021: Bytecode provider name : javassist
+2023-06-16 01:10:31,799 WARN  [org.hibernate.engine.jdbc.connections.internal.ConnectionProviderInitiator] (default task-1) HHH000209: proxool properties were encountered, but the proxool provider class was not found on the classpath; these properties are going to be ignored.
+2023-06-16 01:10:31,799 WARN  [org.hibernate.orm.connections.pooling] (default task-1) HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2023-06-16 01:10:31,799 INFO  [org.hibernate.orm.connections.pooling] (default task-1) HHH10001005: using driver [com.mysql.cj.jdbc.Driver] at URL [jdbc:mysql://localhost/sgs_aa_sic]
+2023-06-16 01:10:31,799 INFO  [org.hibernate.orm.connections.pooling] (default task-1) HHH10001001: Connection properties: {password=****, user=root}
+2023-06-16 01:10:31,799 INFO  [org.hibernate.orm.connections.pooling] (default task-1) HHH10001003: Autocommit mode: false
+2023-06-16 01:10:31,801 INFO  [org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl] (default task-1) HHH000115: Hibernate connection pool size: 1 (min=1)
+2023-06-16 01:10:31,903 INFO  [org.hibernate.dialect.Dialect] (default task-1) HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2023-06-16 01:10:31,977 INFO  [org.hibernate.annotations.common.Version] (default task-1) HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2023-06-16 01:10:32,198 INFO  [org.hibernate.dialect.Dialect] (default task-1) HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2023-06-16 01:11:16,022 INFO  [org.hibernate.hql.internal.QueryTranslatorFactoryInitiator] (default task-1) HHH000397: Using ASTQueryTranslatorFactory
+2023-06-16 01:12:50,812 INFO  [org.jboss.as.server] (management-handler-thread - 2) WFLYSRV0272: Suspending server
+2023-06-16 01:12:50,813 INFO  [org.jboss.as.ejb3] (management-handler-thread - 2) WFLYEJB0493: EJB subsystem suspension complete
+2023-06-16 01:12:50,814 INFO  [org.jboss.as.server] (Management Triggered Shutdown) WFLYSRV0241: Shutting down in response to management operation 'shutdown'
+2023-06-16 01:12:50,818 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-5) WFLYJCA0019: Stopped Driver service with driver-name = SGSWebAplication.war_com.mysql.cj.jdbc.Driver_8_0
+2023-06-16 01:12:50,821 INFO  [org.wildfly.extension.messaging-activemq] (ServerService Thread Pool -- 182) WFLYMSGAMQ0006: Unbound messaging object to jndi name java:jboss/exported/jms/RemoteConnectionFactory
+2023-06-16 01:12:50,821 INFO  [org.jboss.as.mail.extension] (MSC service thread 1-8) WFLYMAIL0002: Unbound mail session [java:jboss/mail/Default]
+2023-06-16 01:12:50,823 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 185) WFLYUT0022: Unregistered web context: '/SGSWebAplication' from server 'default-server'
+2023-06-16 01:12:50,836 INFO  [org.jboss.as.connector.subsystems.datasources] (MSC service thread 1-7) WFLYJCA0010: Unbound data source [java:jboss/datasources/ExampleDS]
+2023-06-16 01:12:50,836 INFO  [org.jboss.as.connector.deployment] (MSC service thread 1-2) WFLYJCA0011: Unbound JCA ConnectionFactory [java:/JmsXA]
+2023-06-16 01:12:50,836 INFO  [org.jboss.as.connector.deployment] (MSC service thread 1-6) WFLYJCA0119: Unbinding connection factory named java:/JmsXA to alias java:jboss/DefaultJMSConnectionFactory
+2023-06-16 01:12:50,837 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-7) WFLYUT0019: Host default-host stopping
+2023-06-16 01:12:50,838 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-3) WFLYJCA0019: Stopped Driver service with driver-name = h2
+2023-06-16 01:12:50,839 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-7) WFLYUT0008: Undertow HTTPS listener https suspending
+2023-06-16 01:12:50,839 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-7) WFLYUT0007: Undertow HTTPS listener https stopped, was bound to 127.0.0.1:8443
+2023-06-16 01:12:50,844 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-4) WFLYSRV0028: Stopped deployment SGSWebAplication.war (runtime-name: SGSWebAplication.war) in 25ms
+2023-06-16 01:12:50,851 INFO  [org.jboss.as.clustering.infinispan] (ServerService Thread Pool -- 187) WFLYCLINF0003: Stopped client-mappings cache from ejb container
+2023-06-16 01:12:50,871 INFO  [org.apache.activemq.artemis.ra] (ServerService Thread Pool -- 188) AMQ151003: resource adaptor stopped
+2023-06-16 01:12:52,020 INFO  [org.apache.activemq.artemis.core.server] (ServerService Thread Pool -- 188) AMQ221002: Apache ActiveMQ Artemis Message Broker version 2.10.1 [9254d9dc-0a36-11ee-9f48-18cc182854c9] stopped, uptime 2 hours 36 minutes
+2023-06-16 01:12:52,020 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-3) WFLYUT0008: Undertow HTTP listener default suspending
+2023-06-16 01:12:52,021 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-3) WFLYUT0007: Undertow HTTP listener default stopped, was bound to 127.0.0.1:8080
+2023-06-16 01:12:52,021 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-6) WFLYUT0004: Undertow 2.0.27.Final stopping
+2023-06-16 01:12:52,025 INFO  [org.jboss.as] (MSC service thread 1-8) WFLYSRV0050: WildFly Full 18.0.1.Final (WildFly Core 10.0.3.Final) stopped in 1207ms
