@@ -44,6 +44,8 @@
             .table-container {
                 width: 80%;
                 margin: 0 auto;
+                overflow-y: auto;
+                max-height: 75vh;
             }
 
             .data-table {
@@ -140,14 +142,17 @@
                     body: JSON.stringify("Delete/" + codigo)
                 })
                     .then(response => response.text())
-                    .then(html => {
-                        console.log(html);
+                    .then(html => { console.log(html);
+                        document.getElementById("confirmMessage").textContent = "Curso " + codigo + " eliminado com sucesso!";
+                        setTimeout(function(){
+                        location.reload();
+                        document.getElementById("confirmMessage").textContent = "";
+                        }, 3000);
                     })
                     .catch(error => {
                         // Handle network error
                         console.error('Network error:', error);
                     });
-                location.reload();
             }
         }
 
@@ -171,8 +176,6 @@
             }
         }
 
-
-
         function submitChanges(codigo, nome, duracao, descricao) {
             const url = window.location.href; // Get the current URL
             const data = "Edit/" + codigo + "/" + nome + "/" + duracao + "/" + descricao;
@@ -186,20 +189,41 @@
               body: JSON.stringify(data)
             })
             .then(response => response.text())
-            .then(html => { console.log(html);})
+            .then(html => { console.log(html);
+                document.getElementById("confirmMessage").textContent = "Curso " + codigo + " editado com sucesso!";
+                setTimeout(function(){
+                location.reload();
+                document.getElementById("confirmMessage").textContent = "";
+                }, 3000);
+            })
             .catch(error => {
               // Handle network error
               console.error('Network error:', error);
             });
         }
+        
+        function confirmMessage(codigo){
+            console.log(codigo);
+            document.getElementById("confirmMessage").textContent = "Curso " + codigo + " criado com sucesso!";
+            setTimeout(function(){
+                document.getElementById("confirmMessage").textContent = "";
+            }, 3000);
+        }
     </script>
     <body>
+        <button style="position: fixed; top: 20px; right: 20px; padding: 12px; background-color: #ff0000; border: none; color: #fff; font-size: 16px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);" onclick="window.location.href='login'">Logout</button>
         <div class="header">
             <h1>Gestão de Cursos</h1>
         </div>
         <div class="main-menu">
             <a href="adminMainMenu" style="margin-left:15px">Main Menu</a> > Gestão de Cursos
         </div>
+        <p id= "confirmMessage" style="width: 100%; text-align: center; color: green"> </p>
+        <% if (session.getAttribute("createdCurso") != null) {
+            out.println("<script>confirmMessage('" + session.getAttribute("createdCurso") + "');</script>");
+            session.setAttribute("createdCurso", null);
+            }
+        %>
         <div class="table-container">
             <table class="data-table">
                 <tr>
@@ -235,8 +259,8 @@
             </table>
         </div>
         <div class="fixed-buttons">
-            <button onclick="window.location.href='criarCurso.jsp'">Criar Curso</button>
-            <button onclick="window.history.back()">Voltar</button>
+            <button onclick="window.location.href='criarCurso'">Criar Curso</button>
+            <button onclick="window.location.href='adminMainMenu'">Voltar</button>
         </div>
     </body>
 </html>

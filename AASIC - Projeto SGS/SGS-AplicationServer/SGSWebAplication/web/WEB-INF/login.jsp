@@ -54,13 +54,13 @@
                 cursor: pointer;
             }
             .register-link {
-            text-align: center;
-            margin-top: 10px;
+                text-align: center;
+                margin-top: 10px;
             }
             .result-text {
-            text-align: center;
-            margin-top: 10px;
-            color: red;
+                text-align: center;
+                margin-top: 10px;
+                color: red;
             }
         </style>
     </head>
@@ -77,16 +77,20 @@
                     <input type="password" id="password" name="password" required>
                 </div>
                 <div class="result-text">
-                    <% if (session.getAttribute("Type") != null) { %>
-                        <%= session.getAttribute("Type") %>
-                    <% } %>
+                    <% if (session.getAttribute("ErrorMessage") != null) { %>
+                        <%= session.getAttribute("ErrorMessage") %>
+                        <% session.setAttribute("ErrorMessage", null);
+                        } %>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Login">
                 </div>
             </form>
             <div class="register-link">
-                <a href="register.jsp">Register</a>
+                <a href="registerUtilizador">Registar Utilizador</a>
+            </div>
+            <div class="register-link">
+                <a href="registerAluno">Registar Aluno</a>
             </div>
         </div>
     </body>

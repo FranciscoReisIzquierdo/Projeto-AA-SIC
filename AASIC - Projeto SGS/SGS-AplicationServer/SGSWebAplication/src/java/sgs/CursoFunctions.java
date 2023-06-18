@@ -4,6 +4,8 @@
  */
 package sgs;
 
+import java.util.Arrays;
+import java.util.List;
 import org.orm.PersistentException;
 import org.orm.PersistentTransaction;
 
@@ -45,29 +47,40 @@ public class CursoFunctions {
         }
 }
     
-    public boolean createCurso(String nome, String codigo, Integer duracao, String descricao) throws PersistentException{
-        PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
-        boolean result = false;
-        try {
-        sgs.Curso curso = sgs.CursoDAO.createCurso();
-        curso.setCodigo(codigo);
-        curso.setNome(nome);
-        curso.setDuracao(duracao);
-        curso.setDescricao(descricao);
-        
-        result = sgs.CursoDAO.save(curso);
-        t.commit();
+    public boolean createCurso(String codigo, String nome, Integer duracao, String descricao){
+        try{
+            if(sgs.CursoDAO.getCursoByORMID(codigo) != null) return false;
+            PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
+            boolean result = false;
+            try {
+            sgs.Curso curso = sgs.CursoDAO.createCurso();
+            curso.setCodigo(codigo);
+            curso.setNome(nome);
+            curso.setDuracao(duracao);
+            curso.setDescricao(descricao);
+
+            result = sgs.CursoDAO.save(curso);
+            t.commit();
+            }
+            catch (Exception e) {
+                t.rollback();
+            }
+            return result;
         }
         catch (Exception e) {
-            t.rollback();
+            return false;
         }
-        return result;
     }
     
     
     public boolean deleteCurso(String codigo){
         try{
             sgs.Curso curso = sgs.CursoDAO.getCursoByORMID(codigo);
+            sgs.DisciplinaFunctions discpFunctions = new sgs.DisciplinaFunctions();
+            List<sgs.Disciplina> allDisciplinas = Arrays.asList(discpFunctions.getAllDisciplinas());
+            for(Disciplina disp : allDisciplinas){
+                if(disp.getCurso().getCodigo().equals(codigo)) discpFunctions.deleteDisciplina(disp.getCodigo());
+            } 
             boolean done = sgs.CursoDAO.delete(curso);
             return done;
         }

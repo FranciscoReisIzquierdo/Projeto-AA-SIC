@@ -4,6 +4,7 @@
  */
 package web;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
@@ -53,16 +54,32 @@ public class criarSala extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if(session.getAttribute("Type")!= null && session.getAttribute("Type").equals("Administrador")){
+            
+            List<String> json = getData(request);
+            PrintWriter writer = response.getWriter();
+            sgs.SalaFunctions salaFunctions = new sgs.SalaFunctions();
+            boolean valid = salaFunctions.createSala(json.get(0), json.get(1), Integer.parseInt(json.get(2)));
+            if(valid) session.setAttribute("createdSala", json.get(0));
+            writer.println(valid);
+        }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+    public List<String> getData(HttpServletRequest request){
+        try{
+            StringBuilder requestBody = new StringBuilder();
+            BufferedReader reader = request.getReader();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                requestBody.append(line);
+            }
+            String str = requestBody.toString();
+            str = str.substring(1, str.length() - 1);
+            return Arrays.asList(str.split("//"));
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
 }

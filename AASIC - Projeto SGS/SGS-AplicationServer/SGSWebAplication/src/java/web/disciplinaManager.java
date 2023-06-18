@@ -61,9 +61,10 @@ public class disciplinaManager extends HttpServlet {
             
             List<String> json = getData(request);
             sgs.DisciplinaFunctions discpFunctions = new sgs.DisciplinaFunctions();
-            
+            PrintWriter writer = response.getWriter();
             if(json.get(0).equals("Edit")){
-                discpFunctions.updateDisciplina(json.get(1), json.get(2), json.get(3), json.get(4), json.get(6), Integer.parseInt(json.get(5)));
+                String message = discpFunctions.updateDisciplina(json.get(1), json.get(2), json.get(3), json.get(4), json.get(6), Integer.parseInt(json.get(5)));
+                writer.println(message);
             }
             else if(json.get(0).equals("Delete")) discpFunctions.deleteDisciplina(json.get(1));
         }

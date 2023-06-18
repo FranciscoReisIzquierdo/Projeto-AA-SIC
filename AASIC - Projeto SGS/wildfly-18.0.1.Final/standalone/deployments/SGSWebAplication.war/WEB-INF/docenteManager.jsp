@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Gestão de Cursos</title>
+        <title>Gestão de Docentes</title>
         <style>
             body {
                 background-color: #f2f2f2;
@@ -44,6 +44,8 @@
             .table-container {
                 width: 80%;
                 margin: 0 auto;
+                overflow-y: auto;
+                max-height: 75vh;
             }
             
             table {
@@ -136,8 +138,8 @@
         </style>
     </head>
     <script>
-        function confirmDelete(codigo) {
-            var confirmation = confirm("Tem a certeza de que pretende eliminar a disciplina " + codigo + "?");
+        function confirmDelete(email) {
+            var confirmation = confirm("Tem a certeza de que pretende eliminar o docente " + email + "?");
             if (confirmation) {
                 const url = window.location.href;
                 console.log(url);
@@ -147,17 +149,20 @@
                         'Content-Type': 'application/json',
                         'JSESSIONID': '${pageContext.session.id}'
                     },
-                    body: JSON.stringify("Delete//" + codigo)
+                    body: JSON.stringify("Delete//" + email)
                 })
                     .then(response => response.text())
-                    .then(html => {
-                        console.log(html);
+                    .then(html => { console.log(html);
+                        document.getElementById("confirmMessage").textContent = "Docente " + email + " eliminado com sucesso!";
+                        setTimeout(function(){
+                        location.reload();
+                        document.getElementById("confirmMessage").textContent = "";
+                        }, 3000);
                     })
                     .catch(error => {
                         // Handle network error
                         console.error('Network error:', error);
                     });
-                location.reload();
             }
         }
 
@@ -188,11 +193,9 @@
             }
         }
 
-
-
-        function submitChanges(codigo, nome, idade, numero, genero, departamento) {
+        function submitChanges(email, nome, idade, numero, genero, departamento) {
             const url = window.location.href; // Get the current URL
-            const data = "Edit//" + codigo + "//" + nome + "//" + idade + "//" + numero + "//" + genero + "//" + departamento;
+            const data = "Edit//" + email + "//" + nome + "//" + idade + "//" + numero + "//" + genero + "//" + departamento;
 
             fetch(url, {
               method: 'POST',
@@ -203,29 +206,49 @@
               body: JSON.stringify(data)
             })
             .then(response => response.text())
-            .then(html => { console.log(html);})
+            .then(html => { console.log(html);
+                document.getElementById("confirmMessage").textContent = "Docente " + email + " editado com sucesso!";
+                        setTimeout(function(){
+                        location.reload();
+                        document.getElementById("confirmMessage").textContent = "";
+                        }, 3000);
+            })
             .catch(error => {
               // Handle network error
               console.error('Network error:', error);
             });
         }
+        
+        function confirmMessage(email){
+            document.getElementById("confirmMessage").textContent = "Docente " + email + " criado com sucesso!";
+            setTimeout(function(){
+                document.getElementById("confirmMessage").textContent = "";
+            }, 3000);
+        }
     </script>
     <body>
+        <button style="position: fixed; top: 20px; right: 20px; padding: 12px; background-color: #ff0000; border: none; color: #fff; font-size: 16px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);" onclick="window.location.href='login'">Logout</button>
         <div class="header">
             <h1>Gestão de Docentes</h1>
         </div>
         <div class="main-menu">
             <a href="adminMainMenu" style="margin-left:15px">Main Menu</a> > Gestão de Docentes
         </div>
+        <p id= "confirmMessage" style="width: 100%; text-align: center; color: green"> </p>
+        <% if (session.getAttribute("createdDocente") != null) {
+            out.println("<script>confirmMessage('" + session.getAttribute("createdDocente") + "');</script>");
+            session.setAttribute("createdDocente", null);
+            }
+        %>
         <div class="table-container">
             <table class="data-table">
                 <tr>
                     <th>Email</th>
-                    <th>Nome</th>
+                    <th onmouseover="this.style.width = '350px'" onmouseout="this.style.width = ''">Nome</th>
                     <th>Idade</th>
                     <th>Numero</th>
                     <th>Genero</th>
-                    <th>Departamento</th>
+                    <th onmouseover="this.style.width = '350px'" onmouseout="this.style.width = ''">Departamento</th>
                     <th>Ações</th>
                 </tr>
                 <% List<sgs.Docente> rows = (List<sgs.Docente>) request.getAttribute("allDocentes");
@@ -247,7 +270,7 @@
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="genero-<%= row.getEmail() %>" type="text" value="<%= row.getGenero() %>" readonly>
                             </td>
                             <td>
-                                <input class="cell-content" style="width: 200px; background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="departamento-<%= row.getEmail() %>" type="text" value="<%= row.getDepartamento() %>" readonly>
+                                <input class="cell-content" style=" background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="departamento-<%= row.getEmail() %>" type="text" value="<%= row.getDepartamento() %>" readonly>
                             </td>
                             <td class="buttons">
                                 <button id="editButton-<%= row.getEmail() %>" type="button" onclick="toggleEdit('<%= row.getEmail() %>')">Edit</button>
@@ -260,8 +283,8 @@
             </table>
         </div>
         <div class="fixed-buttons">
-            <button onclick="window.location.href='criarDocente.jsp'">Criar Docente</button>
-            <button onclick="window.history.back()">Voltar</button>
+            <button onclick="window.location.href='criarDocente'">Criar Docente</button>
+            <button onclick="window.location.href='adminMainMenu'">Voltar</button>
         </div>
     </body>
 </html>

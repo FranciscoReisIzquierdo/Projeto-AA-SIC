@@ -4,7 +4,10 @@
  */
 package sgs;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import org.orm.PersistentException;
 import org.orm.PersistentTransaction;
 
@@ -13,60 +16,83 @@ import org.orm.PersistentTransaction;
  * @author franc
  */
 public class ConferenciaFunctions {
-    public boolean createConferencia(String codigo, String nome, String codigoSala, long inicio, long fim, boolean livre, String descricao, String orador, String tema) throws PersistentException{
-        PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
-        boolean result = false;
-        try {
-            sgs.Conferencia conferencia = sgs.ConferenciaDAO.createConferencia();
-            conferencia.setCodigo(codigo);
-            conferencia.setNome(nome);
-            conferencia.setHoraInicio(inicio);
-            conferencia.setHoraFim(fim);
-            conferencia.setLivre(livre);
-            conferencia.setDescrição(descricao);
-            conferencia.setOrador(orador);
-            conferencia.setTema(tema);
-            sgs.Sala sala = sgs.SalaDAO.getSalaByORMID(codigoSala);
-            sala.eventos.add(conferencia);
-            conferencia.sala = sala;
-            /*
-            System.out.println("Eventos da sala " + sala.getCodigo() + ": ");
-            
-            Iterator<Evento> iterator = sala.eventos.getIterator();
-            while (iterator.hasNext()) {
-                Evento elemento = iterator.next();
-                System.out.println(elemento);
-            }*/
-            
-            
-            result = sgs.ConferenciaDAO.save(conferencia);
-            t.commit();
-        }
-        catch (Exception e) {
-            t.rollback();
-        }
-        return result;
-    }
-    
-    public boolean updateConferencia(String codigo, String nome, Long horainicio, Long horafim, boolean livre, 
-        String descricao, String orador, String tema, String codigoSala){
+    public String createConferencia(String codigo, String nome, String codigoSala, long inicio, long fim, boolean livre, String descricao, String orador, String tema){
         try{
             PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
-           
+            if(inicio < System.currentTimeMillis()) return "Nao e possivel criar conferencias com data de inicio passada";
+            if(ConferenciaDAO.getConferenciaByORMID(codigo) != null) return "Conferencia " + codigo + " ja existe";
+            if(SalaDAO.getSalaByORMID(codigoSala) == null) return "Sala " + codigoSala + " inexistente";
+            if(!checkHorario(codigo, codigoSala, inicio, fim)) return "Horario indisponivel. Ja existe outro evento agendado no horario definido na sala " + codigoSala;
+            if(inicio >= fim) return "Data de inicio da conferencia tem de ser antes da data de fim";
+            try {
+                sgs.Conferencia conferencia = sgs.ConferenciaDAO.createConferencia();
+                conferencia.setCodigo(codigo);
+                conferencia.setNome(nome);
+                conferencia.setHoraInicio(inicio);
+                conferencia.setHoraFim(fim);
+                conferencia.setLivre(livre);
+                conferencia.setDescrição(descricao);
+                conferencia.setOrador(orador);
+                conferencia.setTema(tema);
+                sgs.Sala sala = sgs.SalaDAO.getSalaByORMID(codigoSala);
+                sala.eventos.add(conferencia);
+                conferencia.sala = sala;
+
+                sgs.ConferenciaDAO.save(conferencia);
+                t.commit();
+                return "true";
+            }
+            catch (Exception e) {
+                t.rollback();
+            }
+            return "";
+        }
+        catch (Exception e) {
+            return "";
+        }
+    }
+    
+    
+    public boolean checkHorario(String codigo, String codigoSala, long inicio, long fim){
+        try{
+            Sala sala = SalaDAO.getSalaByORMID(codigoSala);
+            List<sgs.Evento> allEventos = Arrays.asList(sala.eventos.toArray()); 
+            for(Evento evento : allEventos){
+                if(!evento.getCodigo().equals(codigo) && ((evento.getHoraInicio() <= inicio && evento.getHoraFim() > inicio) || (evento.getHoraInicio() < fim && evento.getHoraFim() >= fim)
+                        || (evento.getHoraInicio() >= inicio && evento.getHoraFim() < inicio) || (evento.getHoraInicio() > fim && evento.getHoraFim() <= fim))) return false;
+            }
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+    
+    public String updateConferencia(String codigo, String nome, Long horainicio, Long horafim, boolean livre, 
+        String descricao, String orador, String tema, String codigoSala){
+        if(horainicio < System.currentTimeMillis()) return "Conferencia finalizada/ a decorrer";
+        try{
+            PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
+            String result = "true";
+            if(SalaDAO.getSalaByORMID(codigoSala) == null) result = "Sala " + codigoSala + " inexistente";
+            if(!checkHorario(codigo, codigoSala, horainicio, horafim)) result = "Horario indisponivel. Ja existe outro evento agendado no horario fornecido na sala " + codigoSala;
+            if(horainicio >= horafim) result = "Data de inicio da conferencia tem de ser antes da data de fim";
             try {
                 sgs.Conferencia conferencia = sgs.ConferenciaDAO.getConferenciaByORMID(codigo);
                 if (nome != null && !nome.equals("")){
                     conferencia.setNome(nome);
                 }
-                if (horainicio != null && horainicio > 0){
-                    conferencia.setHoraInicio(horainicio);
-                }
-                if (horafim != null && horafim > 0){
-                    conferencia.setHoraFim(horafim);
+                if(horainicio < horafim){
+                    if (horainicio != null && horainicio > 0){
+                        conferencia.setHoraInicio(horainicio);
+                    }
+                    if (horafim != null && horafim > 0){
+                        conferencia.setHoraFim(horafim);
+                    }
                 }
 
-                conferencia.setLivre(conferencia.getLivre());
-
+                conferencia.setLivre(livre);
+                
                 if (descricao != null && !descricao.equals("")){
                     conferencia.setDescrição(descricao);
                 }
@@ -88,17 +114,16 @@ public class ConferenciaFunctions {
                     }
                 }
                 t.commit();
+                return result;
             }
             catch (Exception e){
                 t.rollback();
-                return false;
+                return "";
             }
         }
-        
         catch (Exception e){
-            return false;
+            return "";
         }
-        return true;
     }
     
     public boolean deleteConferencia(String codigo){
@@ -122,48 +147,68 @@ public class ConferenciaFunctions {
         }
     }
     
+    public List<Conferencia> getAllConfDisponiveis(){
+        long time = System.currentTimeMillis();
+        List<Conferencia> allConf = Arrays.asList(getAllConferencias());
+        List<Conferencia> restritas = new ArrayList<>();
+        for(Conferencia conf : allConf){
+            if(conf.inscritos.size() < conf.getSala().getCapacidade() && conf.getHoraInicio() > time) restritas.add(conf);
+        }
+        return restritas;
+    }
     
-    public boolean inscreveConferencia(String codigo, String email) throws PersistentException{
-        PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
+    
+    public String inscreveConferencia(String codigo, String email){
         try{
-            sgs.Conferencia conferencia = sgs.ConferenciaDAO.getConferenciaByORMID(codigo);
-            sgs.Utilizador user = sgs.UtilizadorDAO.getUtilizadorByORMID(email);
+            PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
+            try{
+                sgs.Conferencia conferencia = sgs.ConferenciaDAO.getConferenciaByORMID(codigo);
+                sgs.Utilizador user = sgs.UtilizadorDAO.getUtilizadorByORMID(email);
 
-            if(conferencia.getLivre()) return true;
-            else{
-                if(conferencia.inscritos.size() < conferencia.getSala().getCapacidade()){
-                    conferencia.inscritos.add(user);
-                    t.commit();
-                    return true;
+                if(conferencia.getLivre()) return "";
+                else{
+                    if(conferencia.inscritos.size() < conferencia.getSala().getCapacidade()){
+                        conferencia.inscritos.add(user);
+                        t.commit();
+                        return "true";
+                    }
+                    else return "";
                 }
-                else return false;
+            }
+            catch (Exception e) {
+                t.rollback();
+                return "";
             }
         }
         catch (Exception e) {
-            t.rollback();
-            return false;
+            return "";
         }
     }
     
-    public boolean desinscreveConferencia(String codigo, String email) throws PersistentException{
-        PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
+    public String desinscreveConferencia(String codigo, String email){
         try{
-            sgs.Conferencia conferencia = sgs.ConferenciaDAO.getConferenciaByORMID(codigo);
-            sgs.Utilizador user = sgs.UtilizadorDAO.getUtilizadorByORMID(email);
+            PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
+            try{
+                sgs.Conferencia conferencia = sgs.ConferenciaDAO.getConferenciaByORMID(codigo);
+                sgs.Utilizador user = sgs.UtilizadorDAO.getUtilizadorByORMID(email);
 
-            if(conferencia.getLivre()) return true;
-            else{
-                if(conferencia.inscritos.contains(user)){
-                    conferencia.inscritos.remove(user);
-                    t.commit();
-                    return true;
+                if(conferencia.getLivre()) return "";
+                else{
+                    if(conferencia.inscritos.contains(user)){
+                        conferencia.inscritos.remove(user);
+                        t.commit();
+                        return "false";
+                    }
+                    else return "";
                 }
-                else return false;
+            }
+            catch (Exception e) {
+                t.rollback();
+                return "";
             }
         }
         catch (Exception e) {
-            t.rollback();
-            return false;
+            return "";
         }
     }
 }

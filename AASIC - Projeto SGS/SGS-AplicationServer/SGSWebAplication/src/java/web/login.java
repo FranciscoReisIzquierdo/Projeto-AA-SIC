@@ -20,32 +20,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "login", urlPatterns = {"/login"})
 public class login extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            Object obj = "hello";
-            request.setAttribute("obj", obj);
-            request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
-            
-            HttpSession session = request.getSession();
-            Object username = null;
-            //verificar login
-            //session.setAttribute("username", username);
-            //response.sendRedirect("welcome.jsp");
-        }
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -58,6 +32,8 @@ public class login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if(session != null) session.setAttribute("Type", null);
         request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
     }
 
@@ -79,8 +55,9 @@ public class login extends HttpServlet {
        
         sgs.UtilizadorFunctions userFunctions = new sgs.UtilizadorFunctions();
         String result = userFunctions.login(email, pass);
+       
         
-        if(result .equals("Email invalido")){
+        if(result.equals("Email invalido")){
             sgs.AdministradorFunctions adminFunctions = new sgs.AdministradorFunctions();
             result = adminFunctions.login(email, pass);
             if(result.equals("Administrador")){
@@ -88,24 +65,33 @@ public class login extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/adminMainMenu");
             }
             else{
-                session.setAttribute("Type", result);
+                session.setAttribute("ErrorMessage", result);
                 response.sendRedirect(request.getContextPath() + "/login");
             }
         }
         else if(result.equals("Aluno")){
+            String nome = userFunctions.getNome(email);
             session.setAttribute("Type", result);
+            session.setAttribute("Nome", nome);
+            session.setAttribute("Email", email);
             response.sendRedirect(request.getContextPath() + "/alunoMainMenu");
         }
         else if(result.equals("Docente")){
+            String nome = userFunctions.getNome(email);
             session.setAttribute("Type", result);
+            session.setAttribute("Nome", nome);
+            session.setAttribute("Email", email);
             response.sendRedirect(request.getContextPath() + "/docenteMainMenu");
         }
         else if(result.equals("Utilizador")){
+            String nome = userFunctions.getNome(email);
             session.setAttribute("Type", result);
+            session.setAttribute("Nome", nome);
+            session.setAttribute("Email", email);
             response.sendRedirect(request.getContextPath() + "/utilizadorMainMenu");
         }
         else{
-            session.setAttribute("Type", result);
+            session.setAttribute("ErrorMessage", result);
             response.sendRedirect(request.getContextPath() + "/login");
         }
     }

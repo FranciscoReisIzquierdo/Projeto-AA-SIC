@@ -14,24 +14,29 @@ import org.orm.PersistentTransaction;
  */
 public class SalaFunctions {
     
-    public boolean createSala(String codigo, String localizacao, int capacidade) throws PersistentException{
-        PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
-        boolean result = false;
-        try {
-        if(sgs.SalaDAO.getSalaByORMID(codigo)!= null) return false;
-        sgs.Sala sGSSala = sgs.SalaDAO.createSala();
-        
-        sGSSala.setCodigo(codigo);
-        sGSSala.setLocalizacao(localizacao);
-        sGSSala.setCapacidade(capacidade);
-        
-        result = sgs.SalaDAO.save(sGSSala);
-        t.commit();
+    public boolean createSala(String codigo, String localizacao, int capacidade){
+        try{
+            PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
+            boolean result = false;
+            try {
+            if(sgs.SalaDAO.getSalaByORMID(codigo)!= null) return false;
+            sgs.Sala sGSSala = sgs.SalaDAO.createSala();
+
+            sGSSala.setCodigo(codigo);
+            sGSSala.setLocalizacao(localizacao);
+            sGSSala.setCapacidade(capacidade);
+
+            result = sgs.SalaDAO.save(sGSSala);
+            t.commit();
+            }
+            catch (Exception e) {
+                t.rollback();
+            }
+            return result;
         }
         catch (Exception e) {
-            t.rollback();
+            return false;
         }
-        return result;
     }
     
     public boolean updateCapacidade(String codigo, Integer capacidade){

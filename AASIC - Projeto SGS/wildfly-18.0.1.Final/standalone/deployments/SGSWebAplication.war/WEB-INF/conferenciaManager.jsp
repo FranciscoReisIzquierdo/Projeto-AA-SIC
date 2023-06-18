@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Gestão de Cursos</title>
+        <title>Gestão de Confêrencias</title>
         <style>
             body {
                 background-color: #f2f2f2;
@@ -44,6 +44,8 @@
             .table-container {
                 width: 80%;
                 margin: 0 auto;
+                overflow-y: auto;
+                max-height: 75vh;
             }
 
             .data-table {
@@ -125,6 +127,10 @@
             input:focus {
                 outline: none;
             }
+            
+            input[readonly] {
+                pointer-events: none;
+            }
         </style>
     </head>
     <script>
@@ -185,7 +191,7 @@
                 oradorElement.readOnly = true;
                 temaElement.readOnly = true;
                 editButton.innerHTML = "Edit";
-                submitChanges(codigo, nomeElement.value, horainicioElement.value, horafimElement.value, salaElement.value, entradaElement.value,
+                submitChanges(codigo, nomeElement.value, horainicioElement.value, horafimElement.value, salaElement.value, entradaElement.checked,
                     descricaoElement.value, oradorElement.value, temaElement.value);
             }
         }
@@ -193,10 +199,14 @@
 
 
         function submitChanges(codigo, nome, horainicio, horafim, sala, entrada, descricao, orador, tema) {
+            horainicio = new Date(horainicio).getTime();
+            horafim = new Date(horafim).getTime();
+            if(entrada) entrada = "true";
+            else entrada = "false";
             const url = window.location.href; // Get the current URL
             const data = "Edit//" + codigo + "//" + nome + "//" + horainicio + "//" + horafim + 
                     "//" + sala + "//" + entrada + "//" + descricao + "//" + orador + "//" + tema;
-
+            
             fetch(url, {
               method: 'POST',
               headers: {
@@ -206,20 +216,45 @@
               body: JSON.stringify(data)
             })
             .then(response => response.text())
-            .then(html => { console.log(html);})
+            .then(message => { console.log(message);
+        
+                if(message === "true\n")
+                    document.getElementById("confirmMessage").textContent = "Conferencia " + codigo + " editada com sucesso!";
+                else document.getElementById("errorMessage").textContent = message;
+                setTimeout(function(){
+                document.getElementById("errorMessage").textContent = "";
+                location.reload();
+                document.getElementById("confirmMessage").textContent = "";
+                }, 3000);
+            })
             .catch(error => {
               // Handle network error
               console.error('Network error:', error);
             });
         }
+        
+        function confirmMessage(codigo){
+            document.getElementById("confirmMessage").textContent = "Conferencia " + codigo + " criada com sucesso!";
+            setTimeout(function(){
+                document.getElementById("confirmMessage").textContent = "";
+            }, 3000);
+        }
     </script>
     <body>
+        <button style="position: fixed; top: 20px; right: 20px; padding: 12px; background-color: #ff0000; border: none; color: #fff; font-size: 16px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);" onclick="window.location.href='login'">Logout</button>
         <div class="header">
             <h1>Gestão de Conferências</h1>
         </div>
         <div class="main-menu">
             <a href="adminMainMenu" style="margin-left:15px">Main Menu</a> > Gestão de Conferências
         </div>
+        <p id= "confirmMessage" style="width: 100%; text-align: center; color: green"> </p>
+        <% if (session.getAttribute("createdConferencia") != null) {
+            out.println("<script>confirmMessage('" + session.getAttribute("createdConferencia") + "');</script>");
+            session.setAttribute("createdConferencia", null);
+            }
+        %>
+        <p id= "errorMessage" style="width: 100%; text-align: center; color: red"> </p>
         <div class="table-container">
             <table class="data-table">
                 <tr>
@@ -228,7 +263,7 @@
                     <th onmouseover="this.style.width = '200px'" onmouseout="this.style.width = ''">Dia/Hora de Inicio</th>
                     <th onmouseover="this.style.width = '200px'" onmouseout="this.style.width = ''">Dia/ Hora de Fim</th>
                     <th>Sala</th>
-                    <th>Entrada</th>
+                    <th>Entrada Livre</th>
                     <th>Descrição</th>
                     <th onmouseover="this.style.width = '250px'" onmouseout="this.style.width = ''">Orador</th>
                     <th onmouseover="this.style.width = '250px'" onmouseout="this.style.width = ''">Tema</th>
@@ -262,7 +297,7 @@
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="sala-<%= row.getCodigo() %>" type="text" value="<%= row.getSala().getCodigo() != null ? row.getSala().getCodigo() : "Sem sala atribuida" %>" readonly>
                             </td>
                             <td>
-                                <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="entrada-<%= row.getCodigo() %>" type="text" value="<%= row.getLivre() ? "Livre" : "Restrito" %>" readonly>
+                                <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="entrada-<%= row.getCodigo() %>" type="checkbox" <%= row.getLivre() ? "checked" : "unchecked" %> readonly>
                             </td>
                             <td>
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="descricao-<%= row.getCodigo() %>" type="text" value="<%= row.getDescrição() %>" readonly>
@@ -274,7 +309,11 @@
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="tema-<%= row.getCodigo() %>" type="text" value="<%= row.getTema() %>" readonly>
                             </td>
                             <td class="buttons">
+                                <%
+                                    if(session.getAttribute("currentTime")!= null && row.getHoraInicio() > (long) session.getAttribute("currentTime")){
+                                %>
                                 <button id="editButton-<%= row.getCodigo() %>" type="button" onclick="toggleEdit('<%= row.getCodigo() %>')">Edit</button>
+                                <% } %>
                                 <input type="hidden" name="codigo" value="<%= row.getCodigo() %>">
                                 <button type="button" onclick="confirmDelete('<%= row.getCodigo() %>')">Delete</button>
                             </td>
@@ -284,8 +323,8 @@
             </table>
         </div>
         <div class="fixed-buttons">
-            <button onclick="window.location.href='criarConferencia.jsp'">Criar Conferencia</button>
-            <button onclick="window.history.back()">Voltar</button>
+            <button onclick="window.location.href='criarConferencia'">Criar Conferencia</button>
+            <button onclick="window.location.href='adminMainMenu'">Voltar</button>
         </div>
     </body>
 </html>

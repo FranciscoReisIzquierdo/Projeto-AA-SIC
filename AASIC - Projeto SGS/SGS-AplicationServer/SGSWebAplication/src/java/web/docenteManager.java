@@ -66,7 +66,8 @@ public class docenteManager extends HttpServlet {
             writer.println(json);
             
             if(json.get(0).equals("Edit")){
-                docFunctions.updateDocente(json.get(1), json.get(2), Integer.parseInt(json.get(3)), json.get(4), "", json.get(6), json.get(5).charAt(0));
+                docFunctions.updateDocente(json.get(1), json.get(2), Integer.parseInt(json.get(3)), 
+                        json.get(4), "", json.get(6), json.get(5).charAt(0));
             }
             else if(json.get(0).equals("Delete")) docFunctions.deleteDocente(json.get(1));
         }

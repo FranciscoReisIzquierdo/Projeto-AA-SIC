@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Gestão de Cursos</title>
+        <title>Gestão de Disciplinas</title>
         <style>
             body {
                 background-color: #f2f2f2;
@@ -44,6 +44,8 @@
             .table-container {
                 width: 80%;
                 margin: 0 auto;
+                overflow-y: auto;
+                max-height: 75vh;
             }
 
             .data-table {
@@ -141,14 +143,17 @@
                     body: JSON.stringify("Delete//" + codigo)
                 })
                     .then(response => response.text())
-                    .then(html => {
-                        console.log(html);
+                    .then(html => { console.log(html);
+                        document.getElementById("confirmMessage").textContent = "Disciplina " + codigo + " eliminada com sucesso!";
+                        setTimeout(function(){
+                        location.reload();
+                        document.getElementById("confirmMessage").textContent = "";
+                        }, 3000);
                     })
                     .catch(error => {
                         // Handle network error
                         console.error('Network error:', error);
                     });
-                //location.reload();
             }
         }
 
@@ -179,12 +184,9 @@
             }
         }
 
-
-
         function submitChanges(codigo, nome, curso, docente, carga, descricao) {
             const url = window.location.href; // Get the current URL
             const data = "Edit//" + codigo + "//" + nome + "//" + curso + "//" + docente + "//" + carga + "//" + descricao;
-
             fetch(url, {
               method: 'POST',
               headers: {
@@ -194,20 +196,47 @@
               body: JSON.stringify(data)
             })
             .then(response => response.text())
-            .then(html => { console.log(html);})
+            .then(message => { console.log(message);
+            
+            if(message === "true\n")
+                document.getElementById("confirmMessage").textContent = "Disciplina " + codigo + " editada com sucesso!";
+            else document.getElementById("errorMessage").textContent = message;
+            setTimeout(function(){
+            document.getElementById("errorMessage").textContent = "";
+            location.reload();
+            document.getElementById("confirmMessage").textContent = "";
+            }, 3000);
+            
+            })
             .catch(error => {
               // Handle network error
               console.error('Network error:', error);
             });
+            
+        }
+        
+        function confirmMessage(codigo){
+            document.getElementById("confirmMessage").textContent = "Disciplina " + codigo + " criada com sucesso!";
+            setTimeout(function(){
+                document.getElementById("confirmMessage").textContent = "";
+            }, 3000);
         }
     </script>
     <body>
+        <button style="position: fixed; top: 20px; right: 20px; padding: 12px; background-color: #ff0000; border: none; color: #fff; font-size: 16px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);" onclick="window.location.href='login'">Logout</button>
         <div class="header">
-            <h1>Gestão de Cursos</h1>
+            <h1>Gestão de Disciplinas</h1>
         </div>
         <div class="main-menu">
-            <a href="adminMainMenu" style="margin-left:15px">Main Menu</a> > Gestão de Cursos
+            <a href="adminMainMenu" style="margin-left:15px">Main Menu</a> > Gestão de Disciplinas
         </div>
+        <p id= "confirmMessage" style="width: 100%; text-align: center; color: green"> </p>
+        <% if (session.getAttribute("createdDisciplina") != null) {
+            out.println("<script>confirmMessage('" + session.getAttribute("createdDisciplina") + "');</script>");
+            session.setAttribute("createdDisciplina", null);
+            }
+        %>
+        <p id= "errorMessage" style="width: 100%; text-align: center; color: red"> </p>
         <div class="table-container">
             <table class="data-table">
                 <tr>
@@ -229,7 +258,7 @@
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="nome-<%= row.getCodigo() %>" type="text" value="<%= row.getNome() %>" readonly>
                             </td>
                             <td>
-                                <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="curso-<%= row.getCodigo() %>" type="text" value="<%= row.getCurso().getCodigo() %>" readonly>
+                                <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="curso-<%= row.getCodigo() %>" type="text" value="<%= row.getCurso() != null ? row.getCurso().getCodigo() : "Sem curso" %>" readonly>
                             </td>
                             <td>
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="docente-<%= row.getCodigo() %>" type="text" value="<%= row.getDocente()!= null ? row.getDocente().getEmail() : "Sem docente" %>" readonly>
@@ -251,8 +280,8 @@
             </table>
         </div>
         <div class="fixed-buttons">
-            <button onclick="window.location.href='criarDisciplina.jsp'">Criar Disciplina</button>
-            <button onclick="window.history.back()">Voltar</button>
+            <button onclick="window.location.href='criarDisciplina'">Criar Disciplina</button>
+            <button onclick="window.location.href='adminMainMenu'">Voltar</button>
         </div>
     </body>
 </html>

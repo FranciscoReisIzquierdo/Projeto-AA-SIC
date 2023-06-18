@@ -37,7 +37,7 @@ public class conferenciaManager extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if(session.getAttribute("Type")!= null && session.getAttribute("Type").equals("Administrador")){
-            
+            session.setAttribute("currentTime", System.currentTimeMillis());
             sgs.ConferenciaFunctions confFunctions = new sgs.ConferenciaFunctions();
             List<sgs.Conferencia> allConferencias = Arrays.asList(confFunctions.getAllConferencias());
             request.setAttribute("allConferencias", allConferencias);
@@ -63,11 +63,11 @@ public class conferenciaManager extends HttpServlet {
             List<String> json = getData(request);
             sgs.ConferenciaFunctions confFunctions = new sgs.ConferenciaFunctions();
             PrintWriter writer = response.getWriter();
-            writer.println(json);
             
             if(json.get(0).equals("Edit")){
-                confFunctions.updateConferencia(json.get(1), json.get(2), Long.parseLong(json.get(3)), Long.parseLong(json.get(4)),
-                        true, json.get(7), json.get(8), json.get(9), json.get(5));
+                String message = confFunctions.updateConferencia(json.get(1), json.get(2), Long.parseLong(json.get(3)), Long.parseLong(json.get(4)),
+                        Boolean.parseBoolean(json.get(6)), json.get(7), json.get(8), json.get(9), json.get(5));
+                writer.println(message);
             }
             else if(json.get(0).equals("Delete")) confFunctions.deleteConferencia(json.get(1));
         }

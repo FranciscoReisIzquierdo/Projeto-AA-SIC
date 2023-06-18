@@ -66,6 +66,7 @@
     </style>
     </head>
     <body>
+        <button style="position: fixed; top: 20px; right: 20px; padding: 12px; background-color: #ff0000; border: none; color: #fff; font-size: 16px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);" onclick="window.location.href='login'">Logout</button>
         <div class="header">
             <h1>SGS Admin</h1>
         </div>
@@ -78,7 +79,6 @@
                 <button class="menu-button" onclick="window.location.href='cursoManager'">Gerir Cursos</button>
                 <button class="menu-button" onclick="window.location.href='disciplinaManager'">Gerir Disciplinas</button>
                 <button class="menu-button" onclick="window.location.href='docenteManager'">Gerir Docentes</button>
-                <button class="menu-button" onclick="window.location.href='consultarPresencas'">Consultar Presenças</button>
             </div>
         </div>
     </body>

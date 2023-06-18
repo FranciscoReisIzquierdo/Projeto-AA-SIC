@@ -32,7 +32,7 @@ public class Main {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+    /*
     public static void createSala(){
         System.out.println("Criar sala: codigo/localizacao/capacidade");
         Scanner scanner = new Scanner(System.in);
@@ -91,7 +91,7 @@ public class Main {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    */
+    
     public static void createCurso(){
         System.out.println("Criar curso: codigo/nome/descricao/duracao");
         Scanner scanner = new Scanner(System.in);
@@ -201,7 +201,7 @@ public class Main {
         }
     }
     
-    */
+    
     public static void createDocente(){
         System.out.println("Criar docente: nome/cartao/email/senha/departamento/genero/idade");
         Scanner scanner = new Scanner(System.in);
@@ -315,7 +315,7 @@ public class Main {
         }
     }
     
-    */
+    
     public static void createDisciplina(){
         System.out.println("Criar disciplina: codigo/nome/codigoCurso/emailDocente/descricao/carga horaria");
         Scanner scanner = new Scanner(System.in);
@@ -429,7 +429,7 @@ public class Main {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    */
+    
     
     public static void createConferencia(){
         System.out.println("Criar conferencia codigo/nome/descricao/orador/tema/codigoSala/livre/inicio/fim");
@@ -512,7 +512,7 @@ public class Main {
         //createUtilizador();
         //updateUtilizador();
         //deleteUtilizador();
-        createDisciplina();
+        //createDisciplina();
         //updateDisciplina();
         //deleteDisciplina();
         //createAula();

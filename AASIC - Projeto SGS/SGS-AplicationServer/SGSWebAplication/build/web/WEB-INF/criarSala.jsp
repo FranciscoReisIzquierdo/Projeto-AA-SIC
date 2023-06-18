@@ -74,7 +74,7 @@
 
         .cancel-button {
             background-color: #ccc;
-            color: #fff;
+            color: #fff
         }
 
         .create-button {
@@ -84,10 +84,11 @@
     </style>
     </head>
     <body>
+        <button style="position: fixed; top: 20px; right: 20px; padding: 12px; background-color: #ff0000; border: none; color: #fff; font-size: 16px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);" onclick="window.location.href='login'">Logout</button>
         <div class="container">
             <h1 class="title">Criar Sala</h1>
-            <div class="breadcrumb">Main Menu &gt; Gerir Salas &gt; Criar Sala</div>
-
+            <a href="adminMainMenu">Main Menu</a> > <a href="salaManager">Gestão de Salas</a> > Criar Sala
+            <p style="color: red" id="errorMessage"> </p>
             <div class="form-container">
                 <form id="createRoomForm">
                     <input type="text" name="codigo" class="form-input" placeholder="Código">
@@ -95,8 +96,8 @@
                     <input type="number" name="capacidade" class="form-input" placeholder="Capacidade">
 
                     <div class="form-buttons">
-                        <button class="cancel-button" onclick="goBack()">Cancelar</button>
-                        <button class="create-button" onclick="createRoom()">Criar</button>
+                        <button class="cancel-button" type="button" onclick="goBack()">Cancelar</button>
+                        <button class="create-button" type="button" onclick="createRoom()">Criar</button>
                     </div>
                 </form>
             </div>
@@ -104,7 +105,7 @@
 
         <script>
             function goBack() {
-                window.history.back();
+                window.location.href = 'salaManager';
             }
 
             function createRoom() {
@@ -126,7 +127,13 @@
                     body: JSON.stringify(dataString)
                   })
                   .then(response => response.text())
-                  .then(html => { console.log(html);})
+                  .then(isValid => {
+                      if(isValid === "true\n") goBack();
+                      else{
+                          var errorMessage = document.getElementById("errorMessage");
+                          errorMessage.textContent = "Erro ao criar sala. Já existe uma sala com o código " + codigo;
+                      }
+                    })
                   .catch(error => {
                     // Handle network error
                     console.error('Network error:', error);

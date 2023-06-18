@@ -15,31 +15,38 @@ import org.orm.PersistentTransaction;
  */
 public class DocenteFunctions {
     
-    public boolean createDocente(String nome, Integer idade, String cartao, String email, String senha, String departamento, Character genero) throws PersistentException{
-        PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
-        boolean result = false;
-        try {
-        sgs.Docente docente = sgs.DocenteDAO.createDocente();
-        
-        docente.setNome(nome);
-        docente.setSenha(senha);
-        docente.setEmail(email);
-        docente.setIdade(idade);
-        docente.setNumero(cartao);
-        docente.setDepartamento(departamento);
-        docente.setGenero(genero);
-        
-        result = sgs.DocenteDAO.save(docente);
-        t.commit();
+    public boolean createDocente(String email, String nome, Integer idade, String cartao, String senha, String departamento, Character genero){
+        try{
+            if(UtilizadorDAO.getUtilizadorByORMID(email) != null || AlunoDAO.getAlunoByORMID(email) != null
+                    || DocenteDAO.getDocenteByORMID(email) != null || AdministradorDAO.getAdministradorByORMID(email) != null) return false;
+            PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
+            boolean result = false;
+            try {
+            sgs.Docente docente = sgs.DocenteDAO.createDocente();
+
+            docente.setNome(nome);
+            docente.setSenha(senha);
+            docente.setEmail(email);
+            docente.setIdade(idade);
+            docente.setNumero(cartao);
+            docente.setDepartamento(departamento);
+            docente.setGenero(genero);
+
+            result = sgs.DocenteDAO.save(docente);
+            t.commit();
+            }
+            catch (Exception e) {
+                t.rollback();
+            }
+            return result;
         }
         catch (Exception e) {
-            t.rollback();
+            return false;
         }
-        return result;
     }
     
     
-    public boolean updateDocente(String email, String nome, Integer idade, String cartao, String senha, String departamento, Character genero){
+    public String updateDocente(String email, String nome, Integer idade, String cartao, String senha, String departamento, Character genero){
         try{
             PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
             try {
@@ -68,15 +75,15 @@ public class DocenteFunctions {
                     docente.setDepartamento(departamento);
                 }
                 t.commit();
-                return true;
+                return "true";
             }
             catch (Exception e){
                 t.rollback();
-                return false;
+                return "";
             }
         }
         catch (Exception e){
-                return false;
+                return "";
             }
     }
 

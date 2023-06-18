@@ -14,10 +14,12 @@ import org.orm.PersistentTransaction;
  */
 public class UtilizadorFunctions {
     
-    public boolean createUtilizador(String nome, Integer idade, String cartao, String email, String senha, Character genero) throws PersistentException{
-        PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
-        boolean result = false;
-        try {
+    public String createUtilizador(String email, String nome, String senha, Integer idade, String cartao, Character genero){
+        try{
+            if(UtilizadorDAO.getUtilizadorByORMID(email) != null || AlunoDAO.getAlunoByORMID(email) != null
+                    || DocenteDAO.getDocenteByORMID(email) != null || AdministradorDAO.getAdministradorByORMID(email) != null)
+                return "Ja existe um utilizador com o email indicado";
+            PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
             sgs.Utilizador utilizador = sgs.UtilizadorDAO.createUtilizador();
 
             utilizador.setNome(nome);
@@ -26,64 +28,85 @@ public class UtilizadorFunctions {
             utilizador.setIdade(idade);
             utilizador.setNumero(cartao);
             utilizador.setGenero(genero);
-            
-            result = sgs.UtilizadorDAO.save(utilizador);
+
+            sgs.UtilizadorDAO.save(utilizador);
             t.commit();
+            return "true";
         }
         catch (Exception e) {
-            t.rollback();
+            return "";
         }
-        return result;
     }
     
-    public boolean updateUtilizador(String nome, Integer idade, String cartao, String email, String senha, Character genero) throws PersistentException{
-        PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
-        try {
-            sgs.Utilizador utilizador = sgs.UtilizadorDAO.getUtilizadorByORMID(email);
-            
-            if (nome != null && !nome.equals("")){
-                utilizador.setNome(nome);
-            }
-            if (genero != null && !genero.equals("")){
-                utilizador.setGenero(genero);
-            }
-            if (idade != null && idade > 0){
-                utilizador.setIdade(idade);
-            }
-            if (cartao != null && !cartao.equals("")){
-                utilizador.setNumero(cartao);
-            }
-           
-            if (senha != null && !senha.equals("")){
-                utilizador.setSenha(senha);
-            }
-            t.commit();
+    public String updateUtilizador(String email, String nome, String senha, Integer idade, String cartao, Character genero){
+        try{    
+            PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
+                try {
+                    sgs.Utilizador utilizador = sgs.UtilizadorDAO.getUtilizadorByORMID(email);
+
+                    if (nome != null && !nome.equals("")){
+                        utilizador.setNome(nome);
+                    }
+                    if (genero != null && !genero.equals("")){
+                        utilizador.setGenero(genero);
+                    }
+                    if (idade != null && idade > 0){
+                        utilizador.setIdade(idade);
+                    }
+                    if (cartao != null && !cartao.equals("")){
+                        utilizador.setNumero(cartao);
+                    }
+
+                    if (senha != null && !senha.equals("")){
+                        utilizador.setSenha(senha);
+                    }
+                    t.commit();
+                    return "true";
+                }
+                catch (Exception e){
+                    t.rollback();
+                    return e.toString();
+                }
         }
         catch (Exception e){
-            t.rollback();
-            return false;
+            return "2222 " + e.toString();
         }
-        return true;
     }
     
-    public boolean deleteUtilizador(String email) throws PersistentException{
-        PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
-        try {
-            sgs.Utilizador utilizador = sgs.UtilizadorDAO.getUtilizadorByORMID(email);
-            ConferenciaFunctions conferenciaFunctions = new sgs.ConferenciaFunctions();
+    public boolean deleteUtilizador(String email){
+        try{
+            PersistentTransaction t = sgs.SistemadeGestãodeSalasPersistentManager.instance().getSession().beginTransaction();
+            try {
+                sgs.Utilizador utilizador = sgs.UtilizadorDAO.getUtilizadorByORMID(email);
+                ConferenciaFunctions conferenciaFunctions = new sgs.ConferenciaFunctions();
 
-            List<sgs.Conferencia> allConferencias =  Arrays.asList(conferenciaFunctions.getAllConferencias());
-            for(Conferencia conf : allConferencias){
-                if(!conf.getLivre() && conf.inscritos.contains(utilizador)) conf.inscritos.remove(utilizador);
+                List<sgs.Conferencia> allConferencias =  Arrays.asList(conferenciaFunctions.getAllConferencias());
+                for(Conferencia conf : allConferencias){
+                    if(!conf.getLivre() && conf.inscritos.contains(utilizador)) conf.inscritos.remove(utilizador);
+                }
+
+                boolean done = sgs.UtilizadorDAO.delete(utilizador);
+                t.commit();
+                return done;
             }
-
-            boolean done = sgs.UtilizadorDAO.delete(utilizador);
-            t.commit();
-            return done;
+            catch (Exception e){
+                t.rollback();
+                return false;
+            }
         }
         catch (Exception e){
-            t.rollback();
             return false;
+        }
+    }
+    
+    
+    public Utilizador getUtilizador(String email){
+        try{
+            Utilizador user = UtilizadorDAO.getUtilizadorByORMID(email);
+            return user != null ? user : null;
+        }
+        catch (Exception e){
+            return null;
         }
     }
     
@@ -102,6 +125,16 @@ public class UtilizadorFunctions {
         }
     }
     
+    
+    public String getNome(String email){
+        try{
+            sgs.Utilizador user = sgs.UtilizadorDAO.getUtilizadorByORMID(email);
+            return user != null ? user.getNome() : "";
+        }
+        catch(Exception e){
+            return "";
+        }
+    }
     
     public List<String> getInfoUser(String email) throws PersistentException{
         List<String> info = new ArrayList<>();

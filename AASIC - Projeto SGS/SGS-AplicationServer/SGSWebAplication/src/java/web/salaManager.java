@@ -6,6 +6,7 @@ package web;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -59,15 +60,12 @@ public class salaManager extends HttpServlet {
         if(session.getAttribute("Type")!= null && session.getAttribute("Type").equals("Administrador")){
             
             List<String> json = getData(request);
-            
-            
             sgs.SalaFunctions salaFunctions = new sgs.SalaFunctions();
             
-            if(json.get(0).equals("Edit"))
+            if(json.get(0).equals("Edit")){
                 salaFunctions.updateCapacidade(json.get(1), Integer.parseInt(json.get(2)));
-            
+            }
             else if(json.get(0).equals("Delete"))salaFunctions.deleteSala(json.get(1));
-            //request.getRequestDispatcher("/WEB-INF/salaManager.jsp").forward(request, response);
         }
     }
 
