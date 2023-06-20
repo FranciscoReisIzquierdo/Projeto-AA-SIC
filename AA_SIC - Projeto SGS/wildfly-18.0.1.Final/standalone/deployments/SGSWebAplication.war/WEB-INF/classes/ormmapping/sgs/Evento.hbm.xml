@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Francisco Izquierdo(Universidade do Minho)
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="sgs.Evento" table="Evento" lazy="false" discriminator-value="Evento">
+		<id name="Codigo" column="Codigo" type="string">
+			<generator class="assigned">
+			</generator>
+		</id>
+		<discriminator column="Discriminator" type="string"/>
+		<many-to-one name="sala" cascade="lock" column="SalaCodigo" class="sgs.Sala" not-null="false" lazy="proxy" access="field">
+		</many-to-one>
+		<property name="HoraInicio" column="HoraInicio" type="long" length="20" not-null="true" lazy="false"/>
+		<property name="HoraFim" column="HoraFim" type="long" length="20" not-null="true" lazy="false"/>
+		<property name="Nome" column="Nome" type="string" length="255" not-null="false" lazy="false"/>
+		<subclass name="sgs.Aula" discriminator-value="Aula" lazy="false">
+			<set name="ORM_Presentes" table="Evento_Utilizador" lazy="true" cascade="save-update,lock">
+				<key column="EventoCodigo" not-null="true"/>
+				<many-to-many column="UtilizadorEmail" class="sgs.Aluno">
+				</many-to-many>
+			</set>
+			<many-to-one name="disciplina" cascade="lock" column="DisciplinaCodigo" class="sgs.Disciplina" not-null="false" lazy="proxy" access="field">
+			</many-to-one>
+			<property name="Turno" column="Turno" type="string" length="255" not-null="false" lazy="false"/>
+			<set name="ORM_Inscritos" table="Evento_Utilizador2" lazy="true" cascade="save-update,lock">
+				<key column="EventoCodigo" not-null="true"/>
+				<many-to-many column="UtilizadorEmail" class="sgs.Aluno">
+				</many-to-many>
+			</set>
+			<many-to-one name="docente" cascade="lock" column="UtilizadorEmail" class="sgs.Docente" not-null="false" lazy="proxy" access="field">
+			</many-to-one>
+		</subclass>
+		<subclass name="sgs.Conferencia" discriminator-value="Conferencia" lazy="false">
+			<set name="ORM_Inscritos" table="Evento_Utilizador3" lazy="true" cascade="save-update,lock">
+				<key column="EventoCodigo" not-null="true"/>
+				<many-to-many column="UtilizadorEmail" class="sgs.Utilizador">
+				</many-to-many>
+			</set>
+			<property name="Livre" column="Livre" type="boolean" length="1" not-null="false" lazy="false"/>
+			<property name="Descrição" column="Descrição" type="string" length="255" not-null="false" lazy="false"/>
+			<property name="Orador" column="Orador" type="string" length="255" not-null="false" lazy="false"/>
+			<property name="Tema" column="Tema" type="string" length="255" not-null="false" lazy="false"/>
+			<set name="ORM_Presentes" table="Evento_Utilizador4" lazy="true" cascade="save-update,lock">
+				<key column="EventoCodigo" not-null="true"/>
+				<many-to-many column="UtilizadorEmail" class="sgs.Utilizador">
+				</many-to-many>
+			</set>
+		</subclass>
+	</class>
+</hibernate-mapping>
