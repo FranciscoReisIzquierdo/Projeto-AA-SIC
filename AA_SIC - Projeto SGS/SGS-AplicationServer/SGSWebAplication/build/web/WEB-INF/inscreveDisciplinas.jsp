@@ -131,9 +131,21 @@
             input[readonly] {
                 pointer-events: none;
             }
+            
+            .data-table tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
         </style>
     </head>
     <script>
+        function expandcolumn(id, size){
+            document.getElementById(id).style.width=size;
+        }
+        
+        function shrinkcolumn(id){
+            document.getElementById(id).style.width="";
+        }
+        
       function submitChanges(entrada, email, codigoDiscp) {
             const url = window.location.href; // Get the current URL
             var data;
@@ -174,7 +186,7 @@
             <h1>Inscrição em Disciplinas</h1>
         </div>
         <div class="main-menu">
-            <a href="alunoMainMenu" style="margin-left:15px">Aluno Main Menu</a> > Inscrição em Disciplinas
+            <a href="alunoMainMenu" style="margin-left:15px">Menu Principal</a> > Inscrição em Disciplinas
         </div>
         <p id= "confirmMessage" style="width: 100%; text-align: center; color: green"> </p>
         <p id= "errorMessage" style="width: 100%; text-align: center; color: red"> </p>
@@ -183,11 +195,11 @@
                 <tr>
                     <th>Inscrito</th>
                     <th>Código</th>
-                    <th>Nome</th>
+                    <th id="columnnome">Nome</th>
                     <th>Curso</th>
-                    <th>Docente</th>
+                    <th id="columndocente">Docente</th>
                     <th>Carga</th>
-                    <th onmouseover="this.style.width = '200px'" onmouseout="this.style.width = ''">Descrição</th>
+                    <th>Descrição</th>
                 </tr>
                 <% List<sgs.Disciplina> rows = (List<sgs.Disciplina>) request.getAttribute("allDisciplinas");
                 sgs.Aluno aluno = (sgs.Aluno) session.getAttribute("Aluno");
@@ -200,13 +212,13 @@
                             <td>
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="nome-<%= row.getCodigo() %>" type="text" value="<%= row.getCodigo() %>" readonly>
                             </td>
-                            <td>
+                            <td onmouseover="expandcolumn('columnnome', '400px');" onmouseout="shrinkcolumn('columnnome');">
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="nome-<%= row.getCodigo() %>" type="text" value="<%= row.getNome() %>" readonly>
                             </td>
                             <td>
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="curso-<%= row.getCodigo() %>" type="text" value="<%= row.getCurso() != null ? row.getCurso().getCodigo() : "Sem curso" %>" readonly>
                             </td>
-                            <td>
+                            <td onmouseover="expandcolumn('columndocente', '200px');" onmouseout="shrinkcolumn('columndocente');">
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="docente-<%= row.getCodigo() %>" type="text" value="<%= row.getDocente()!= null ? row.getDocente().getEmail() : "Sem docente" %>" readonly>
                             </td>
                             <td>

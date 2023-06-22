@@ -87,16 +87,19 @@
                 overflow-x: hidden;
                 text-align: center;
             }
+            
             table {
                 width: 100%;
                 table-layout: fixed;
             }
+            
             th, td {
                 text-align: center;
                 padding: 8px;
                 word-wrap: break-word;
                 height: 15px;
             }
+            
             .data-table td.buttons button:hover {
                 background-color: #45a049;
             }
@@ -125,9 +128,21 @@
             input:focus {
                 outline: none;
             }
+            
+            .data-table tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
         </style>
     </head>
     <script>
+        function expandcolumn(id, size){
+            document.getElementById(id).style.width=size;
+        }
+        
+        function shrinkcolumn(id){
+            document.getElementById(id).style.width="";
+        }
+        
         function confirmDelete(codigo) {
             var confirmation = confirm("Tem a certeza de que pretende eliminar o curso " + codigo + "?");
             if (confirmation) {
@@ -216,7 +231,7 @@
             <h1>Gestão de Cursos</h1>
         </div>
         <div class="main-menu">
-            <a href="adminMainMenu" style="margin-left:15px">Main Menu</a> > Gestão de Cursos
+            <a href="adminMainMenu" style="margin-left:15px">Menu Principal</a> > Gestão de Cursos
         </div>
         <p id= "confirmMessage" style="width: 100%; text-align: center; color: green"> </p>
         <% if (session.getAttribute("createdCurso") != null) {
@@ -228,7 +243,7 @@
             <table class="data-table">
                 <tr>
                     <th>Código</th>
-                    <th>Nome</th>
+                    <th id="columnname">Nome</th>
                     <th>Duração</th>
                     <th>Descrição</th>
                     <th>Ações</th>
@@ -239,7 +254,7 @@
                         <tr>
                             <!-- Row data... -->
                             <td id="codigo-<%= row.getCodigo() %>"><%= row.getCodigo() %></td>
-                            <td>
+                            <td onmouseover="expandcolumn('columnname', '400px');" onmouseout="shrinkcolumn('columnname');">
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="nome-<%= row.getCodigo() %>" type="text" value="<%= row.getNome() %>" readonly>
                             </td>
                             <td>
@@ -251,7 +266,7 @@
                             <td class="buttons">
                                 <button id="editButton-<%= row.getCodigo() %>" type="button" onclick="toggleEdit('<%= row.getCodigo() %>')">Edit</button>
                                 <input type="hidden" name="codigo" value="<%= row.getCodigo() %>">
-                                <button type="button" onclick="confirmDelete('<%= row.getCodigo() %>')">Delete</button>
+                                <button style="background-color: red; color: #fff" type="button" onclick="confirmDelete('<%= row.getCodigo() %>')">Delete</button>
                             </td>
                         </tr>
                     <% }
@@ -260,7 +275,7 @@
         </div>
         <div class="fixed-buttons">
             <button onclick="window.location.href='criarCurso'">Criar Curso</button>
-            <button onclick="window.location.href='adminMainMenu'">Voltar</button>
+            <button style="background-color: #ccc; color: #fff" onclick="window.location.href='adminMainMenu'">Voltar</button>
         </div>
     </body>
 </html>

@@ -5,9 +5,11 @@
 package web;
 
 import beans.alunoBeanLocal;
+import beans.cursoBeanLocal;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.ejb.EJB;
@@ -26,6 +28,9 @@ import javax.servlet.http.HttpSession;
 public class registerAluno extends HttpServlet {
 
     @EJB
+    private cursoBeanLocal cursoBean;
+
+    @EJB
     private alunoBeanLocal alunoBean;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -41,6 +46,11 @@ public class registerAluno extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        
+        List<sgs.Curso> allCursos = cursoBean.getAllCursos();
+            List<String> allCursosCodigos = new ArrayList<>();
+            for(sgs.Curso curso : allCursos) allCursosCodigos.add(curso.getCodigo());
+            request.setAttribute("allCursosCodigos", allCursosCodigos);
         request.getRequestDispatcher("/WEB-INF/registerAluno.jsp").forward(request, response);
     }
 

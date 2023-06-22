@@ -174,7 +174,7 @@
             <h1>Inscrição em Conferências</h1>
         </div>
         <div class="main-menu">
-            <a href="docenteMainMenu" style="margin-left:15px">Docente Main Menu</a> > Inscrição em Conferências
+            <a href="docenteMainMenu" style="margin-left:15px">Menu Principal</a> > Inscrição em Conferências
         </div>
         <p id= "confirmMessage" style="width: 100%; text-align: center; color: green"> </p>
         <p id= "errorMessage" style="width: 100%; text-align: center; color: red"> </p>

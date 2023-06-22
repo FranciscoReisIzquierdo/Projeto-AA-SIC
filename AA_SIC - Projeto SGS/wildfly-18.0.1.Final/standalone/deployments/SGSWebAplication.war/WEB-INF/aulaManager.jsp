@@ -132,9 +132,29 @@
             input[readonly] {
                 pointer-events: none;
             }
+            
+            select[disabled]{
+                color: #333;
+                opacity: 100%;
+                cursor: not-allowed;
+                pointer-events: none;
+                text-align: center;
+            }
+            
+            .data-table tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
         </style>
     </head>
     <script>
+        function expandcolumn(id, size){
+            document.getElementById(id).style.width=size;
+        }
+        
+        function shrinkcolumn(id){
+            document.getElementById(id).style.width="";
+        }
+        
         function confirmDelete(codigo) {
             var confirmation = confirm("Tem a certeza de que pretende eliminar a aula " + codigo + "?");
             if (confirmation) {
@@ -172,21 +192,21 @@
             var turnoElement = document.getElementById("turno-" + codigo);
             var editButton = document.getElementById("editButton-" + codigo);
 
-            if (nomeElement.readOnly || horainicioElement.readOnly || horafimElement.readOnly || salaElement.readOnly 
-                    || disciplinaElement.readOnly || turnoElement.readOnly) {
+            if (nomeElement.readOnly || horainicioElement.readOnly || horafimElement.readOnly || salaElement.disabled 
+                    || disciplinaElement.disabled || turnoElement.readOnly) {
                 nomeElement.readOnly = false;
                 horainicioElement.readOnly = false;
                 horafimElement.readOnly = false;
-                salaElement.readOnly = false;
-                disciplinaElement.readOnly = false;
+                salaElement.disabled = false;
+                disciplinaElement.disabled = false;
                 turnoElement.readOnly = false;
                 editButton.innerHTML = "Submit";
             } else {
                 nomeElement.readOnly = true;
                 horainicioElement.readOnly = true;
                 horafimElement.readOnly = true;
-                salaElement.readOnly = true;
-                disciplinaElement.readOnly = true;
+                salaElement.disabled = true;
+                disciplinaElement.disabled = true;
                 turnoElement.readOnly = true;
                 editButton.innerHTML = "Edit";
                 submitChanges(codigo, nomeElement.value, horainicioElement.value, horafimElement.value, salaElement.value,
@@ -242,7 +262,7 @@
             <h1>Gestão de Aulas</h1>
         </div>
         <div class="main-menu">
-            <a href="adminMainMenu" style="margin-left:15px">Main Menu</a> > Gestão de Aulas
+            <a href="adminMainMenu" style="margin-left:15px">Menu Principal</a> > Gestão de Aulas
         </div>
         <p id= "confirmMessage" style="width: 100%; text-align: center; color: green"> </p>
         <% if (session.getAttribute("createdAula") != null) {
@@ -255,14 +275,14 @@
             <table class="data-table">
                 <tr>
                     <th>Codigo</th>
-                    <th onmouseover="this.style.width = '300px'" onmouseout="this.style.width = ''">Nome</th>
-                    <th onmouseover="this.style.width = '200px'" onmouseout="this.style.width = ''">Dia/Hora de Inicio</th>
-                    <th onmouseover="this.style.width = '200px'" onmouseout="this.style.width = ''">Dia/Hora de Fim</th>
+                    <th id="columnname">Nome</th>
+                    <th id="columnhorainicio">Dia/Hora de Inicio</th>
+                    <th id="columnhorafim">Dia/Hora de Fim</th>
                     <th>Sala</th>
                     <th>Disciplina</th>
-                    <th onmouseover="this.style.width = '200px'" onmouseout="this.style.width = ''">Docente</th>
+                    <th>Docente</th>
                     <th>Turno</th>
-                    <th>Ações</th>
+                    <th style="width: 200px">Ações</th>
                 </tr>
                 <% List<sgs.Aula> rows = (List<sgs.Aula>) request.getAttribute("allAulas");
                 if (rows != null) {
@@ -270,10 +290,10 @@
                         <tr>
                             <!-- Row data... -->
                             <td id="codigo-<%= row.getCodigo() %>"><%= row.getCodigo() %></td>
-                            <td>
+                            <td onmouseover="expandcolumn('columnname', '200px');" onmouseout="shrinkcolumn('columnname');">
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="nome-<%= row.getCodigo() %>" type="text" value="<%= row.getNome() %>" readonly>
                             </td>
-                            <td>
+                            <td onmouseover="expandcolumn('columnhorainicio', '200px');" onmouseout="shrinkcolumn('columnhorainicio');">
                                 <% 
                                     java.util.Date dateInicio = new java.util.Date(row.getHoraInicio());
                                     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
@@ -281,7 +301,7 @@
                                 %>
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="horaInicio-<%= row.getCodigo() %>" type="datetime-local" value="<%= formattedDateInicio %>" readonly>
                             </td>
-                            <td>
+                            <td onmouseover="expandcolumn('columnhorafim', '200px');" onmouseout="shrinkcolumn('columnhorafim');">
                                 <% 
                                     java.util.Date date = new java.util.Date(row.getHoraFim());
                                     String formattedDate = sdf.format(date);  
@@ -289,10 +309,32 @@
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="horaFim-<%= row.getCodigo() %>" type="datetime-local" value="<%= formattedDate %>" readonly>
                             </td>
                             <td>
-                                <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="sala-<%= row.getCodigo() %>" type="text" value="<%= row.getSala() != null ? row.getSala().getCodigo() : "Sem sala atribuida" %>" readonly>
+                                <select class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="sala-<%= row.getCodigo() %>" disabled>
+                                    <% 
+                                    List<String> dropdownSalaOptions = (List<String>) request.getAttribute("allSalasCodigos");
+                                    if (dropdownSalaOptions != null) {
+                                        for (String option : dropdownSalaOptions) {
+                                    %>
+                                    <option value="<%= option %>"<%if(row.sala.getCodigo().equals(option)) out.print("selected"); %>><%= option %></option>
+                                    <% 
+                                        }
+                                    }
+                                    %>
+                                </select>
                             </td>
                             <td>
-                                <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="disciplina-<%= row.getCodigo() %>" type="text" value="<%= row.getDisciplina().getCodigo() %>" readonly>
+                                <select class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="disciplina-<%= row.getCodigo() %>" disabled>
+                                    <% 
+                                    List<String> dropdownDiscpOptions = (List<String>) request.getAttribute("allDiscpCodigos");
+                                    if (dropdownDiscpOptions != null) {
+                                        for (String option : dropdownDiscpOptions) {
+                                    %>
+                                    <option value="<%= option %>"<%if(row.getDisciplina().getCodigo().equals(option)) out.print("selected"); %>><%= option %></option>
+                                    <% 
+                                        }
+                                    }
+                                    %>
+                                </select>
                             </td>
                             <td id="docente-<%= row.getCodigo() %>" type="text"> <%= row.getDocente() != null ? row.getDocente().getEmail() : "Sem docente atribuido" %></td>
                             <td>
@@ -310,7 +352,7 @@
                                 <button id="presencasButton-<%= row.getCodigo() %>" type="button" onclick="window.location.href='consultarPresencas/?codAula=<%=row.getCodigo()%>'">Presenças</button>
                                 <% } %>
                                 <input type="hidden" name="codigo" value="<%= row.getCodigo() %>">
-                                <button type="button" onclick="confirmDelete('<%= row.getCodigo() %>')">Delete</button>
+                                <button style="background-color: red; color: #fff" type="button" onclick="confirmDelete('<%= row.getCodigo() %>')">Delete</button>
                             </td>
                         </tr>
                     <% }
@@ -319,7 +361,7 @@
         </div>
         <div class="fixed-buttons">
             <button onclick="window.location.href='criarAula'">Criar Aula</button>
-            <button onclick="window.location.href='adminMainMenu'">Voltar</button>
+            <button style="background-color: #ccc; color: #fff" onclick="window.location.href='adminMainMenu'">Voltar</button>
         </div>
     </body>
 </html>

@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Aluno Main Menu</title>
+        <title>Menu Principal de Aluno</title>
         <style>
         body {
             background-color: #f2f2f2;
@@ -71,7 +71,7 @@
             <h1>Aluno</h1>
         </div>
         <div class="main-menu">
-            <h2>Main Menu</h2>
+            <h2>Menu Principal</h2>
             <div class="menu-buttons">
                 <button class="menu-button" onclick="window.location.href='editarPerfilAluno'">Editar Perfil</button>
                 <button class="menu-button" onclick="window.location.href='inscreveConferenciasAluno'">Inscrever em Conferencias</button>

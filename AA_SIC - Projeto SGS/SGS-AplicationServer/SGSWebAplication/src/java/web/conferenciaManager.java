@@ -5,9 +5,11 @@
 package web;
 
 import beans.conferenciaBeanLocal;
+import beans.salaBeanLocal;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.ejb.EJB;
@@ -24,6 +26,9 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "conferenciaManager", urlPatterns = {"/conferenciaManager"})
 public class conferenciaManager extends HttpServlet {
+
+    @EJB
+    private salaBeanLocal salaBean;
     
     @EJB
     private conferenciaBeanLocal conferenciaBean;
@@ -45,6 +50,11 @@ public class conferenciaManager extends HttpServlet {
             session.setAttribute("currentTime", System.currentTimeMillis());
             List<sgs.Conferencia> allConferencias = conferenciaBean.getAllConferencias();
             request.setAttribute("allConferencias", allConferencias);
+            
+            List<sgs.Sala> allSalas = salaBean.getAllSalas();
+            List<String> allSalasCodigos = new ArrayList<>();
+            for(sgs.Sala sala : allSalas) allSalasCodigos.add(sala.getCodigo());
+            request.setAttribute("allSalasCodigos", allSalasCodigos);
             request.getRequestDispatcher("/WEB-INF/conferenciaManager.jsp").forward(request, response);
         }
     }

@@ -131,9 +131,28 @@
             input[readonly] {
                 pointer-events: none;
             }
+            
+            select[disabled]{
+                color: #333;
+                opacity: 100%;
+                cursor: not-allowed;
+                pointer-events: none;
+            }
+            
+            .data-table tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
         </style>
     </head>
     <script>
+        function expandcolumn(id, size){
+            document.getElementById(id).style.width=size;
+        }
+        
+        function shrinkcolumn(id){
+            document.getElementById(id).style.width="";
+        }
+        
         function confirmDelete(codigo) {
             var confirmation = confirm("Tem a certeza de que pretende eliminar a conferencia " + codigo + "?");
             if (confirmation) {
@@ -170,12 +189,12 @@
             var temaElement = document.getElementById("tema-" + codigo);
             var editButton = document.getElementById("editButton-" + codigo);
 
-            if (nomeElement.readOnly || horainicioElement.readOnly || horafimElement.readOnly || salaElement.readOnly 
+            if (nomeElement.readOnly || horainicioElement.readOnly || horafimElement.readOnly || salaElement.disabled 
                     || entradaElement.readOnly || descricaoElement.readOnly || oradorElement.readOnly || temaElement.readOnly) {
                 nomeElement.readOnly = false;
                 horainicioElement.readOnly = false;
                 horafimElement.readOnly = false;
-                salaElement.readOnly = false;
+                salaElement.disabled = false;
                 entradaElement.readOnly = false;
                 descricaoElement.readOnly = false;
                 oradorElement.readOnly = false;
@@ -185,7 +204,7 @@
                 nomeElement.readOnly = true;
                 horainicioElement.readOnly = true;
                 horafimElement.readOnly = true;
-                salaElement.readOnly = true;
+                salaElement.disabled = true;
                 entradaElement.readOnly = true;
                 descricaoElement.readOnly = true;
                 oradorElement.readOnly = true;
@@ -206,7 +225,7 @@
             const url = window.location.href; // Get the current URL
             const data = "Edit//" + codigo + "//" + nome + "//" + horainicio + "//" + horafim + 
                     "//" + sala + "//" + entrada + "//" + descricao + "//" + orador + "//" + tema;
-            
+            console.log(data)
             fetch(url, {
               method: 'POST',
               headers: {
@@ -246,7 +265,7 @@
             <h1>Gestão de Conferências</h1>
         </div>
         <div class="main-menu">
-            <a href="adminMainMenu" style="margin-left:15px">Main Menu</a> > Gestão de Conferências
+            <a href="adminMainMenu" style="margin-left:15px">Menu Principal</a> > Gestão de Conferências
         </div>
         <p id= "confirmMessage" style="width: 100%; text-align: center; color: green"> </p>
         <% if (session.getAttribute("createdConferencia") != null) {
@@ -258,27 +277,27 @@
         <div class="table-container">
             <table class="data-table">
                 <tr>
-                    <th onmouseover="this.style.width = '200px'" onmouseout="this.style.width = ''">Codigo</th>
-                    <th onmouseover="this.style.width = '300px'" onmouseout="this.style.width = ''">Nome</th>
-                    <th onmouseover="this.style.width = '200px'" onmouseout="this.style.width = ''">Dia/Hora de Inicio</th>
-                    <th onmouseover="this.style.width = '200px'" onmouseout="this.style.width = ''">Dia/ Hora de Fim</th>
+                    <th id="columncodigo">Codigo</th>
+                    <th id="columnname">Nome</th>
+                    <th id="columnhorainicio">Dia/Hora de Inicio</th>
+                    <th id="columnhorafim">Dia/Hora de Fim</th>
                     <th>Sala</th>
                     <th>Entrada Livre</th>
                     <th>Descrição</th>
-                    <th onmouseover="this.style.width = '250px'" onmouseout="this.style.width = ''">Orador</th>
-                    <th onmouseover="this.style.width = '250px'" onmouseout="this.style.width = ''">Tema</th>
-                    <th>Ações</th>
+                    <th id="columnorador">Orador</th>
+                    <th id="columntema">Tema</th>
+                    <th style="width:150px">Ações</th>
                 </tr>
                 <% List<sgs.Conferencia> rows = (List<sgs.Conferencia>) request.getAttribute("allConferencias");
                 if (rows != null) {
                     for (sgs.Conferencia row : rows) { %>
                         <tr>
                             <!-- Row data... -->
-                            <td id="codigo-<%= row.getCodigo() %>"><%= row.getCodigo() %></td>
-                            <td>
+                            <td onmouseover="expandcolumn('columncodigo', '200px');" onmouseout="shrinkcolumn('columncodigo');" id="codigo-<%= row.getCodigo() %>"><%= row.getCodigo() %></td>
+                            <td onmouseover="expandcolumn('columnname', '350px');" onmouseout="shrinkcolumn('columnname');">
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="nome-<%= row.getCodigo() %>" type="text" value="<%= row.getNome() %>" readonly>
                             </td>
-                            <td>
+                            <td onmouseover="expandcolumn('columnhorainicio', '200px');" onmouseout="shrinkcolumn('columnhorainicio');">
                                 <% 
                                     java.util.Date dateInicio = new java.util.Date(row.getHoraInicio());
                                     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
@@ -286,7 +305,7 @@
                                 %>
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="horaInicio-<%= row.getCodigo() %>" type="datetime-local" value="<%= formattedDateInicio %>" readonly>
                             </td>
-                            <td>
+                            <td onmouseover="expandcolumn('columnhorafim', '200px');" onmouseout="shrinkcolumn('columnhorafim');">
                                 <% 
                                     java.util.Date date = new java.util.Date(row.getHoraFim());
                                     String formattedDate = sdf.format(date);  
@@ -294,7 +313,18 @@
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="horaFim-<%= row.getCodigo() %>" type="datetime-local" value="<%= formattedDate %>" readonly>
                             </td>
                             <td>
-                                <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="sala-<%= row.getCodigo() %>" type="text" value="<%= row.getSala().getCodigo() != null ? row.getSala().getCodigo() : "Sem sala atribuida" %>" readonly>
+                                <select class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="sala-<%= row.getCodigo() %>" disabled>
+                                    <% 
+                                    List<String> dropdownSalaOptions = (List<String>) request.getAttribute("allSalasCodigos");
+                                    if (dropdownSalaOptions != null) {
+                                        for (String option : dropdownSalaOptions) {
+                                    %>
+                                    <option value="<%= option %>"<%if(row.sala.getCodigo().equals(option)) out.print("selected"); %>><%= option %></option>
+                                    <% 
+                                        }
+                                    }
+                                    %>
+                                </select>
                             </td>
                             <td>
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="entrada-<%= row.getCodigo() %>" type="checkbox" <%= row.getLivre() ? "checked" : "unchecked" %> readonly>
@@ -302,20 +332,20 @@
                             <td>
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="descricao-<%= row.getCodigo() %>" type="text" value="<%= row.getDescrição() %>" readonly>
                             </td>
-                            <td>
+                            <td onmouseover="expandcolumn('columnorador', '400px');" onmouseout="shrinkcolumn('columnorador');">
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="orador-<%= row.getCodigo() %>" type="text" value="<%= row.getOrador() %>" readonly>
                             </td>
-                            <td>
+                            <td onmouseover="expandcolumn('columntema', '300px');" onmouseout="shrinkcolumn('columntema');">
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="tema-<%= row.getCodigo() %>" type="text" value="<%= row.getTema() %>" readonly>
                             </td>
-                            <td class="buttons">
+                            <td style="width:150px" class="buttons">
                                 <%
                                     if(session.getAttribute("currentTime")!= null && row.getHoraInicio() > (long) session.getAttribute("currentTime")){
                                 %>
                                 <button id="editButton-<%= row.getCodigo() %>" type="button" onclick="toggleEdit('<%= row.getCodigo() %>')">Edit</button>
                                 <% } %>
                                 <input type="hidden" name="codigo" value="<%= row.getCodigo() %>">
-                                <button type="button" onclick="confirmDelete('<%= row.getCodigo() %>')">Delete</button>
+                                <button style="background-color: red; color: #fff" type="button" onclick="confirmDelete('<%= row.getCodigo() %>')">Delete</button>
                             </td>
                         </tr>
                     <% }
@@ -324,7 +354,7 @@
         </div>
         <div class="fixed-buttons">
             <button onclick="window.location.href='criarConferencia'">Criar Conferencia</button>
-            <button onclick="window.location.href='adminMainMenu'">Voltar</button>
+            <button style="background-color: #ccc; color: #fff" onclick="window.location.href='adminMainMenu'">Voltar</button>
         </div>
     </body>
 </html>

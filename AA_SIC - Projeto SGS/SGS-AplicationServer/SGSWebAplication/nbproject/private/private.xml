@@ -12,9 +12,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/franc/OneDrive/Ambiente%20de%20Trabalho/University/4Ano2Semestre/Perfil%20EA/AA_SIC%20-%20Projeto%20SGS/SGS-AplicationServer/SGSWebAplication/web/WEB-INF/consultarPresencas.jsp</file>
-            <file>file:/C:/Users/franc/OneDrive/Ambiente%20de%20Trabalho/University/4Ano2Semestre/Perfil%20EA/AA_SIC%20-%20Projeto%20SGS/SGS-AplicationServer/SGSWebAplication/src/java/beans/utilizadorBean.java</file>
-            <file>file:/C:/Users/franc/OneDrive/Ambiente%20de%20Trabalho/University/4Ano2Semestre/Perfil%20EA/AA_SIC%20-%20Projeto%20SGS/SGS-AplicationServer/SGSWebAplication/web/WEB-INF/consultarPresencasDoc.jsp</file>
+            <file>file:/C:/Users/franc/OneDrive/Ambiente%20de%20Trabalho/University/4Ano2Semestre/Perfil%20EA/AA_SIC%20-%20Projeto%20SGS/SGS-AplicationServer/SGSWebAplication/web/WEB-INF/criarAula.jsp</file>
+            <file>file:/C:/Users/franc/OneDrive/Ambiente%20de%20Trabalho/University/4Ano2Semestre/Perfil%20EA/AA_SIC%20-%20Projeto%20SGS/SGS-AplicationServer/SGSWebAplication/web/WEB-INF/docenteMainMenu.jsp</file>
+            <file>file:/C:/Users/franc/OneDrive/Ambiente%20de%20Trabalho/University/4Ano2Semestre/Perfil%20EA/AA_SIC%20-%20Projeto%20SGS/SGS-AplicationServer/SGSWebAplication/web/WEB-INF/salaInit.jsp</file>
+            <file>file:/C:/Users/franc/OneDrive/Ambiente%20de%20Trabalho/University/4Ano2Semestre/Perfil%20EA/AA_SIC%20-%20Projeto%20SGS/SGS-AplicationServer/SGSWebAplication/src/java/web/salaInit.java</file>
         </group>
     </open-files>
 </project-private>

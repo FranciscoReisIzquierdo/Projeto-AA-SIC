@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Admin Main Menu</title>
+        <title>Menu Principal de Administrador</title>
         <style>
         body {
             background-color: #f2f2f2;
@@ -68,10 +68,10 @@
     <body>
         <button style="position: fixed; top: 20px; right: 20px; padding: 12px; background-color: #ff0000; border: none; color: #fff; font-size: 16px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);" onclick="window.location.href='login'">Logout</button>
         <div class="header">
-            <h1>SGS Admin</h1>
+            <h1>Sistema de Gestão de Salas - Administrador</h1>
         </div>
         <div class="main-menu">
-            <h2>Main Menu</h2>
+            <h2>Menu Principal</h2>
             <div class="menu-buttons">
                 <button class="menu-button" onclick="window.location.href='aulaManager'">Gerir Aulas</button>
                 <button class="menu-button" onclick="window.location.href='conferenciaManager'">Gerir Conferencias</button>

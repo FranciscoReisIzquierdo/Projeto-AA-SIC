@@ -56,6 +56,16 @@
             border-radius: 4px;
             color: #666;
         }
+        
+        .form-select {
+            width: 319px;
+            padding: 8px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            color: #666;
+        }
 
         .form-buttons {
             margin-top: 20px;
@@ -81,20 +91,42 @@
             background-color: #4CAF50;
             color: #fff;
         }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+          }
+
+          label {
+            font-weight: bold;
+          }
+
+          input[type="checkbox"] {
+            margin-top: 5px;
+    }
     </style>
     </head>
     <body>
         <button style="position: fixed; top: 20px; right: 20px; padding: 12px; background-color: #ff0000; border: none; color: #fff; font-size: 16px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);" onclick="window.location.href='login'">Logout</button>
         <div class="container">
             <h1 class="title">Criar Sala</h1>
-            <a href="adminMainMenu">Main Menu</a> > <a href="salaManager">Gestão de Salas</a> > Criar Sala
+            <a href="adminMainMenu">Menu Principal</a> > <a href="salaManager">Gestão de Salas</a> > Criar Sala
             <p style="color: red" id="errorMessage"> </p>
             <div class="form-container">
                 <form id="createRoomForm">
-                    <input type="text" name="codigo" class="form-input" placeholder="Código">
-                    <input type="text" name="localizacao" class="form-input" placeholder="Localização">
-                    <input type="number" name="capacidade" class="form-input" placeholder="Capacidade">
-
+                    <div class="form-group">
+                        <label for="codigo">Código</label>
+                        <input id="codigo" type="text" name="codigo" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="localizacao">Localização</label>
+                        <input id="localizacao" type="text" name="localizacao" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="capacidade">Capacidade</label>
+                        <input id="capacidade" type="number" name="capacidade" class="form-input">
+                    </div>
                     <div class="form-buttons">
                         <button class="cancel-button" type="button" onclick="goBack()">Cancelar</button>
                         <button class="create-button" type="button" onclick="createRoom()">Criar</button>
@@ -118,26 +150,32 @@
 
                 var dataString = codigo + "//" + localizacao + "//" + capacidade;
                 const url = window.location.href;
-                fetch(url, {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'JSESSIONID': '${pageContext.session.id}'
-                    },
-                    body: JSON.stringify(dataString)
-                  })
-                  .then(response => response.text())
-                  .then(isValid => {
-                      if(isValid === "true\n") goBack();
-                      else{
-                          var errorMessage = document.getElementById("errorMessage");
-                          errorMessage.textContent = "Erro ao criar sala. Já existe uma sala com o código " + codigo;
-                      }
-                    })
-                  .catch(error => {
-                    // Handle network error
-                    console.error('Network error:', error);
-                  });
+                if(!dataString.split("//").some(element => element === "NaN" || element === "")){
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                          'JSESSIONID': '${pageContext.session.id}'
+                        },
+                        body: JSON.stringify(dataString)
+                      })
+                      .then(response => response.text())
+                      .then(isValid => {
+                          if(isValid === "true\n") goBack();
+                          else{
+                              var errorMessage = document.getElementById("errorMessage");
+                              errorMessage.textContent = "Erro ao criar sala. Já existe uma sala com o código " + codigo;
+                          }
+                        })
+                      .catch(error => {
+                        // Handle network error
+                        console.error('Network error:', error);
+                      });
+                    }
+                    else{
+                        var errorMessage = document.getElementById("errorMessage");
+                        errorMessage.textContent = "Erro ao criar sala. Um ou mais campos em falta";
+                    }
                 }
         </script>
     </body>

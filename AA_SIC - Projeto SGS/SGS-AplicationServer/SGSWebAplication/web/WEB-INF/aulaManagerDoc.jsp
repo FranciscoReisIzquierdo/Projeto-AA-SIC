@@ -132,9 +132,21 @@
             input[readonly] {
                 pointer-events: none;
             }
+            
+            .data-table tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
         </style>
     </head>
     <script>
+        function expandcolumn(id, size){
+            document.getElementById(id).style.width=size;
+        }
+
+        function shrinkcolumn(id){
+            document.getElementById(id).style.width="";
+        }
+        
         function confirmDelete(codigo) {
             var confirmation = confirm("Tem a certeza de que pretende eliminar a aula " + codigo + "?");
             if (confirmation) {
@@ -242,15 +254,15 @@
             <h1>Consulta de Aulas</h1>
         </div>
         <div class="main-menu">
-            <a href="docenteMainMenu" style="margin-left:15px">Main Menu</a> > Consulta de Aulas
+            <a href="docenteMainMenu" style="margin-left:15px">Menu Principal</a> > Consulta de Aulas
         </div>
         <div class="table-container">
             <table class="data-table">
                 <tr>
                     <th>Codigo</th>
-                    <th onmouseover="this.style.width = '300px'" onmouseout="this.style.width = ''">Nome</th>
-                    <th onmouseover="this.style.width = '200px'" onmouseout="this.style.width = ''">Dia/Hora de Inicio</th>
-                    <th onmouseover="this.style.width = '200px'" onmouseout="this.style.width = ''">Dia/Hora de Fim</th>
+                    <th id="columnname">Nome</th>
+                    <th id="columnhorainicio">Dia/Hora de Inicio</th>
+                    <th id="columnhorafim">Dia/Hora de Fim</th>
                     <th>Sala</th>
                     <th>Disciplina</th>
                     <th>Turno</th>
@@ -262,10 +274,10 @@
                         <tr>
                             <!-- Row data... -->
                             <td id="codigo-<%= row.getCodigo() %>"><%= row.getCodigo() %></td>
-                            <td>
+                            <td onmouseover="expandcolumn('columnname', '400px');" onmouseout="shrinkcolumn('columnname');">
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="nome-<%= row.getCodigo() %>" type="text" value="<%= row.getNome() %>" readonly>
                             </td>
-                            <td>
+                            <td onmouseover="expandcolumn('columnhorainicio', '200px');" onmouseout="shrinkcolumn('columnhorainicio');">
                                 <% 
                                     java.util.Date dateInicio = new java.util.Date(row.getHoraInicio());
                                     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
@@ -273,7 +285,7 @@
                                 %>
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="horaInicio-<%= row.getCodigo() %>" type="datetime-local" value="<%= formattedDateInicio %>" readonly>
                             </td>
-                            <td>
+                            <td onmouseover="expandcolumn('columnhorafim', '200px');" onmouseout="shrinkcolumn('columnhorafim');">
                                 <% 
                                     java.util.Date date = new java.util.Date(row.getHoraFim());
                                     String formattedDate = sdf.format(date);  

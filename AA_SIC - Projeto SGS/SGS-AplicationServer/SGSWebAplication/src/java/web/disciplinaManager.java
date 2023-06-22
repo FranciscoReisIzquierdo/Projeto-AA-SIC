@@ -4,10 +4,13 @@
  */
 package web;
 
+import beans.cursoBeanLocal;
 import beans.disciplinaBeanLocal;
+import beans.docenteBeanLocal;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.ejb.EJB;
@@ -24,6 +27,12 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "disciplinaManager", urlPatterns = {"/disciplinaManager"})
 public class disciplinaManager extends HttpServlet {
+
+    @EJB
+    private docenteBeanLocal docenteBean;
+
+    @EJB
+    private cursoBeanLocal cursoBean;
 
     @EJB
     private disciplinaBeanLocal disciplinaBean;
@@ -45,6 +54,15 @@ public class disciplinaManager extends HttpServlet {
             
             List<sgs.Disciplina> allDisciplinas = disciplinaBean.getAllDisciplinas();
             request.setAttribute("allDisciplinas", allDisciplinas);
+            List<sgs.Curso> allCursos = cursoBean.getAllCursos();
+            List<String> allCursosCodigos = new ArrayList<>();
+            for(sgs.Curso curso : allCursos) allCursosCodigos.add(curso.getCodigo());
+            request.setAttribute("allCursosCodigos", allCursosCodigos);
+            
+            List<sgs.Docente> allDocentes = docenteBean.getAllDocentes();
+            List<String> allDocentesEmails = new ArrayList<>();
+            for(sgs.Docente doc : allDocentes) allDocentesEmails.add(doc.getEmail());
+            request.setAttribute("allDocentesEmails", allDocentesEmails);
             request.getRequestDispatcher("/WEB-INF/disciplinaManager.jsp").forward(request, response);
         }
     }

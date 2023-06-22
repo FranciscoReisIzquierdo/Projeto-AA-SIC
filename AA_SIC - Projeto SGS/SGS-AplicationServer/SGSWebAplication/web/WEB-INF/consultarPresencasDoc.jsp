@@ -133,16 +133,19 @@
             input[readonly] {
                 pointer-events: none;
             }
+            
+            .data-table tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
         </style>
     </head>
-        
     <body>
         <button style="position: fixed; top: 20px; right: 20px; padding: 12px; background-color: #ff0000; border: none; color: #fff; font-size: 16px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);" onclick="window.location.href='login'">Logout</button>
         <div class="header">
             <h1>Consultar Presenças da Aula <%= session.getAttribute("codigoAula") %> </h1>
         </div>
         <div class="main-menu">
-            <a href="../docenteMainMenu" style="margin-left:15px">Main Menu</a> > <a href="../aulaManagerDoc" >Consulta de Aulas </a> > Consultar Presenças
+            <a href="../docenteMainMenu" style="margin-left:15px">Menu Principal</a> > <a href="../aulaManagerDoc" >Consulta de Aulas </a> > Consultar Presenças
         </div>
         <div class="table-container">
             <table class="data-table">

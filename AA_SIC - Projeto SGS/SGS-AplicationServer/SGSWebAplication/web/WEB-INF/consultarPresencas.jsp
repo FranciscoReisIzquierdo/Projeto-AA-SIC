@@ -133,6 +133,10 @@
             input[readonly] {
                 pointer-events: none;
             }
+            
+            .data-table tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
         </style>
     </head>
         
@@ -142,13 +146,13 @@
             <h1>Consultar Presenças da Aula <%= session.getAttribute("codigoAula") %> </h1>
         </div>
         <div class="main-menu">
-            <a href="../adminMainMenu" style="margin-left:15px">Main Menu</a> > <a href="../aulaManager" >Gestão de Aulas </a> > Consultar Presenças
+            <a href="../adminMainMenu" style="margin-left:15px">Menu Principal</a> > <a href="../aulaManager" >Gestão de Aulas </a> > Consultar Presenças
         </div>
         <div class="table-container">
             <table class="data-table">
                 <tr>
-                    <th onmouseover="this.style.width = '300px'" onmouseout="this.style.width = ''">Nome</th>
-                    <th onmouseover="this.style.width = '200px'" onmouseout="this.style.width = ''">Email</th>
+                    <th>Nome</th>
+                    <th>Email</th>
                     <th>Presença</th>
                 </tr>
                 <% sgs.Aula aula = (sgs.Aula) request.getAttribute("aula");

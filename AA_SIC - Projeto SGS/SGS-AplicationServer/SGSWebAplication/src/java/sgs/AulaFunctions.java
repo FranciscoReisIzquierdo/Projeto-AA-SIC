@@ -79,7 +79,7 @@ public class AulaFunctions {
 
         sgs.Sala salanova = sgs.SalaDAO.getSalaByORMID(codigoSala);
         if(salanova != null){
-            if(codigoSala != null && !codigoSala.equals("") && !codigoSala.equals(sgs.SalaDAO.getSalaByORMID(codigoSala).getCodigo())){
+            if(codigoSala != null && !codigoSala.equals("") && !codigoSala.equals(aula.sala.getCodigo())){
                 sgs.Sala salaantiga = sgs.SalaDAO.getSalaByORMID(aula.sala.getCodigo());
                 salaantiga.eventos.remove(aula);
                 aula.sala = null;

@@ -5,9 +5,12 @@
 package web;
 
 import beans.aulaBeanLocal;
+import beans.disciplinaBeanLocal;
+import beans.salaBeanLocal;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.ejb.EJB;
@@ -24,6 +27,12 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "aulaManager", urlPatterns = {"/aulaManager"})
 public class aulaManager extends HttpServlet {
+
+    @EJB
+    private disciplinaBeanLocal disciplinaBean;
+
+    @EJB
+    private salaBeanLocal salaBean;
 
     @EJB
     private aulaBeanLocal aulaBean;
@@ -45,6 +54,16 @@ public class aulaManager extends HttpServlet {
             session.setAttribute("currentTime", System.currentTimeMillis());
             List<sgs.Aula> allAulas = aulaBean.getAllAulas();
             request.setAttribute("allAulas", allAulas);
+            
+            List<sgs.Sala> allSalas = salaBean.getAllSalas();
+            List<String> allSalasCodigos = new ArrayList<>();
+            for(sgs.Sala sala : allSalas) allSalasCodigos.add(sala.getCodigo());
+            request.setAttribute("allSalasCodigos", allSalasCodigos);
+            
+            List<sgs.Disciplina> allDiscp = disciplinaBean.getAllDisciplinas();
+            List<String> allDiscpCodigos = new ArrayList<>();
+            for(sgs.Disciplina discp : allDiscp) allDiscpCodigos.add(discp.getCodigo());
+            request.setAttribute("allDiscpCodigos", allDiscpCodigos);
             request.getRequestDispatcher("/WEB-INF/aulaManager.jsp").forward(request, response);
         }
     }

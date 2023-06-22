@@ -56,6 +56,16 @@
             border-radius: 4px;
             color: #666;
         }
+        
+        .form-select {
+            width: 319px;
+            padding: 8px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            color: #666;
+        }
 
         .form-buttons {
             margin-top: 20px;
@@ -86,22 +96,22 @@
             display: flex;
             flex-direction: column;
             margin-bottom: 10px;
-          }
+        }
 
-          label {
-            font-weight: bold;
-          }
+        label {
+          font-weight: bold;
+        }
 
-          input[type="checkbox"] {
-            margin-top: 5px;
-}
+        input[type="checkbox"] {
+          margin-top: 5px;
+        }
     </style>
     </head>
     <body>
         <button style="position: fixed; top: 20px; right: 20px; padding: 12px; background-color: #ff0000; border: none; color: #fff; font-size: 16px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);" onclick="window.location.href='login'">Logout</button>
         <div class="container">
         <h1 class="title">Editar Docente</h1>
-        <a href="docenteMainMenu">Docente Main Menu</a> >
+        <a href="docenteMainMenu">Menu Principal</a> > Editar Perfil
         <p style="color: red" id="errorMessage"></p>
         <div class="form-container">
             <%
@@ -109,31 +119,34 @@
                 %>
             <form id="registerUtilizadorForm">
                 <div class="form-group">
-                    <label for="codigo">Email:</label>
-                    <input type="email" name="email" value="<%= docente.getEmail() %>" class="form-input" placeholder="Email" readonly>
+                    <label for="codigo">Email</label>
+                    <input type="email" name="email" value="<%= docente.getEmail() %>" class="form-input" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="genero">Senha:</label>
-                    <input type="password" name="senha" value="<%= docente.getSenha() %>" class="form-input" placeholder="Senha" required>
+                    <label for="genero">Senha</label>
+                    <input type="password" name="senha" value="<%= docente.getSenha() %>" class="form-input" required>
                 </div>
                 <div class="form-group">
-                    <label for="nome">Nome:</label>
-                    <input type="text" name="nome" value="<%= docente.getNome() %>" class="form-input" placeholder="Nome" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="cartao">Cartão:</label>
-                    <input type="text" name="cartao" value="<%= docente.getNumero() %>" class="form-input" placeholder="Cartao" required>
+                    <label for="nome">Nome</label>
+                    <input type="text" name="nome" value="<%= docente.getNome() %>" class="form-input" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="idade">Idade:</label>
-                    <input type="number" name="idade" value="<%= docente.getIdade() %>" class="form-input" placeholder="Idade" required>
+                    <label for="cartao">Numero/Identificador Mecanográfico</label>
+                    <input type="text" name="cartao" value="<%= docente.getNumero() %>" class="form-input" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="genero">Genero:</label>
-                    <input type="text" name="genero" value="<%= docente.getGenero() %>" class="form-input" placeholder="Genero" required>
+                    <label for="idade">Idade</label>
+                    <input type="number" name="idade" value="<%= docente.getIdade() %>" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="genero">Genero</label>
+                    <select id="genero" name="genero" class="form-select">
+                            <option value="M" <%if(docente.getGenero() == "M".charAt(0)) out.print("selected"); %>>M</option>
+                            <option value="F" <%if(docente.getGenero() == "F".charAt(0)) out.print("selected"); %>>F</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="departamento">Departamento</label>
@@ -164,27 +177,33 @@
                 var dataString = "Edit//" + email + "//" + nome + "//" + idade + "//" + cartao + "//" + senha 
                         + "//" + departamento + "//" + genero;
                 const url = window.location.href;
-                fetch(url, {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'JSESSIONID': '${pageContext.session.id}'
-                    },
-                    body: JSON.stringify(dataString)
-                  })
-                  .then(response => response.text())
-                  .then(isValid => {
-                      console.log(isValid);
-                      if(isValid === "true\n") window.location.href = 'docenteMainMenu';
-                      else{
-                          var errorMessage = document.getElementById("errorMessage");
-                          errorMessage.textContent = "Erro ao editar perfil." + isValid;
-                      }
-                    })
-                  .catch(error => {
-                    // Handle network error
-                    console.error('Network error:', error);
-                  });
+                if(!dataString.split("//").some(element => element === "NaN" || element === "")){
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                          'JSESSIONID': '${pageContext.session.id}'
+                        },
+                        body: JSON.stringify(dataString)
+                      })
+                      .then(response => response.text())
+                      .then(isValid => {
+                          console.log(isValid);
+                          if(isValid === "true\n") window.location.href = 'docenteMainMenu';
+                          else{
+                              var errorMessage = document.getElementById("errorMessage");
+                              errorMessage.textContent = "Erro ao editar perfil." + isValid;
+                          }
+                        })
+                      .catch(error => {
+                        // Handle network error
+                        console.error('Network error:', error);
+                      });
+                    }
+                    else{
+                        var errorMessage = document.getElementById("errorMessage");
+                        errorMessage.textContent = "Erro ao editar perfil. Um ou mais campos em falta";
+                    }
                 }
         </script>
     </body>

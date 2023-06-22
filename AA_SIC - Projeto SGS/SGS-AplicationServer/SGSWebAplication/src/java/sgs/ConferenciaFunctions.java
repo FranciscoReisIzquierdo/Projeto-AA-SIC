@@ -88,7 +88,7 @@ public class ConferenciaFunctions {
             }
             sgs.Sala salanova = sgs.SalaDAO.getSalaByORMID(codigoSala);
             if(salanova != null){
-                if (codigoSala != null && !codigoSala.equals("") && !codigoSala.equals(sgs.SalaDAO.getSalaByORMID(codigoSala).getCodigo())){
+                if (codigoSala != null && !codigoSala.equals("") && !codigoSala.equals(conferencia.sala.getCodigo())){
                     sgs.Sala salaantiga = sgs.SalaDAO.getSalaByORMID(conferencia.sala.getCodigo());
                     salaantiga.eventos.remove(conferencia);
                     conferencia.sala = null;

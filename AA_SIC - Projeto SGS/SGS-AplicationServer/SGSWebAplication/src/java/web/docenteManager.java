@@ -4,10 +4,12 @@
  */
 package web;
 
+import beans.cursoBeanLocal;
 import beans.docenteBeanLocal;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.ejb.EJB;
@@ -24,7 +26,8 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "docenteManager", urlPatterns = {"/docenteManager"})
 public class docenteManager extends HttpServlet {
-    
+
+
     @EJB
     private docenteBeanLocal docenteBean;
     

@@ -105,8 +105,6 @@
                 transition: background-color 0.3s;
             }
             
-            
-
             .data-table td.buttons button:hover {
                 background-color: #45a049;
             }
@@ -135,9 +133,29 @@
             input:focus {
                 outline: none;
             }
+            
+            select[disabled]{
+                color: #333;
+                opacity: 100%;
+                cursor: not-allowed;
+                pointer-events: none;
+            }
+            
+            .data-table tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
         </style>
     </head>
     <script>
+        function expandcolumn(id, size){
+            document.getElementById(id).style.width=size;
+        }
+        
+        function shrinkcolumn(id){
+            document.getElementById(id).style.width="";
+        }
+        
+        
         function confirmDelete(email) {
             var confirmation = confirm("Tem a certeza de que pretende eliminar o docente " + email + "?");
             if (confirmation) {
@@ -173,20 +191,21 @@
             var generoElement = document.getElementById("genero-" + codigo);
             var departamentoElement = document.getElementById("departamento-" + codigo);
             var editButton = document.getElementById("editButton-" + codigo);
-
-            if (nomeElement.readOnly || idadeElement.readOnly || numeroElement.readOnly || generoElement.readOnly 
+            console.log(generoElement, generoElement.readOnly);
+            
+            if (nomeElement.readOnly || idadeElement.readOnly || numeroElement.readOnly || generoElement.disabled 
                     || departamentoElement.readOnly) {
                 nomeElement.readOnly = false;
                 idadeElement.readOnly = false;
                 numeroElement.readOnly = false;
-                generoElement.readOnly = false;
+                generoElement.disabled = false;
                 departamentoElement.readOnly = false;
                 editButton.innerHTML = "Submit";
             } else {
                 nomeElement.readOnly = true;
                 idadeElement.readOnly = true;
                 numeroElement.readOnly = true;
-                generoElement.readOnly = true;
+                generoElement.disabled = true;
                 departamentoElement.readOnly = true;
                 editButton.innerHTML = "Edit";
                 submitChanges(codigo, nomeElement.value, idadeElement.value, numeroElement.value, generoElement.value, departamentoElement.value);
@@ -196,7 +215,6 @@
         function submitChanges(email, nome, idade, numero, genero, departamento) {
             const url = window.location.href; // Get the current URL
             const data = "Edit//" + email + "//" + nome + "//" + idade + "//" + numero + "//" + genero + "//" + departamento;
-
             fetch(url, {
               method: 'POST',
               headers: {
@@ -232,7 +250,7 @@
             <h1>Gestão de Docentes</h1>
         </div>
         <div class="main-menu">
-            <a href="adminMainMenu" style="margin-left:15px">Main Menu</a> > Gestão de Docentes
+            <a href="adminMainMenu" style="margin-left:15px">Menu Principal</a> > Gestão de Docentes
         </div>
         <p id= "confirmMessage" style="width: 100%; text-align: center; color: green"> </p>
         <% if (session.getAttribute("createdDocente") != null) {
@@ -244,11 +262,11 @@
             <table class="data-table">
                 <tr>
                     <th>Email</th>
-                    <th onmouseover="this.style.width = '350px'" onmouseout="this.style.width = ''">Nome</th>
+                    <th id="columnname">Nome</th>
                     <th>Idade</th>
-                    <th>Numero</th>
+                    <th>Nº/Id Mecanográfico</th>
                     <th>Genero</th>
-                    <th onmouseover="this.style.width = '350px'" onmouseout="this.style.width = ''">Departamento</th>
+                    <th id="columndepartamento">Departamento</th>
                     <th>Ações</th>
                 </tr>
                 <% List<sgs.Docente> rows = (List<sgs.Docente>) request.getAttribute("allDocentes");
@@ -257,7 +275,7 @@
                         <tr>
                             <!-- Row data... -->
                             <td id="codigo-<%= row.getEmail() %>"><%= row.getEmail() %></td>
-                            <td>
+                            <td onmouseover="expandcolumn('columnname', '400px');" onmouseout="shrinkcolumn('columnname');">
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="nome-<%= row.getEmail() %>" type="text" value="<%= row.getNome() %>" readonly>
                             </td>
                             <td>
@@ -267,15 +285,19 @@
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="numero-<%= row.getEmail() %>" type="text" value="<%= row.getNumero() %>" readonly>
                             </td>
                             <td>
-                                <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="genero-<%= row.getEmail() %>" type="text" value="<%= row.getGenero() %>" readonly>
+                                <select class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="genero-<%= row.getEmail() %>" disabled>
+                                    <option value="M" <%if(row.getGenero() == "M".charAt(0)) out.print("selected"); %>>M</option>
+                                    <option value="F" <%if(row.getGenero() == "F".charAt(0)) out.print("selected"); %>>F</option>
+                                    
+                                </select>
                             </td>
-                            <td>
-                                <input class="cell-content" style=" background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="departamento-<%= row.getEmail() %>" type="text" value="<%= row.getDepartamento() %>" readonly>
+                            <td onmouseover="expandcolumn('columndepartamento', '300px');" onmouseout="shrinkcolumn('columndepartamento');">
+                                <input onmouseover="expandcolumn('columndepartamento', '300px');" onmouseout="shrinkcolumn('columndepartamento');" class="cell-content" style=" background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="departamento-<%= row.getEmail() %>" type="text" value="<%= row.getDepartamento() %>" readonly>
                             </td>
                             <td class="buttons">
                                 <button id="editButton-<%= row.getEmail() %>" type="button" onclick="toggleEdit('<%= row.getEmail() %>')">Edit</button>
                                 <input type="hidden" name="codigo" value="<%= row.getEmail() %>">
-                                <button type="button" onclick="confirmDelete('<%= row.getEmail() %>')">Delete</button>
+                                <button style="background-color: red; color: #fff" type="button" onclick="confirmDelete('<%= row.getEmail() %>')">Delete</button>
                             </td>
                         </tr>
                     <% }
@@ -284,7 +306,7 @@
         </div>
         <div class="fixed-buttons">
             <button onclick="window.location.href='criarDocente'">Criar Docente</button>
-            <button onclick="window.location.href='adminMainMenu'">Voltar</button>
+            <button style="background-color: #ccc; color: #fff" onclick="window.location.href='adminMainMenu'">Voltar</button>
         </div>
     </body>
 </html>

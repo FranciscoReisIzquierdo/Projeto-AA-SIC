@@ -4,12 +4,13 @@
     Author     : franc
 --%>
 
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Criar Curso</title>
+        <title>Criar Docente</title>
         <style>
         body {
             font-family: Arial, sans-serif;
@@ -56,6 +57,16 @@
             border-radius: 4px;
             color: #666;
         }
+        
+        .form-select {
+            width: 319px;
+            padding: 8px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            color: #666;
+        }
 
         .form-buttons {
             margin-top: 20px;
@@ -81,23 +92,61 @@
             background-color: #4CAF50;
             color: #fff;
         }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        label {
+          font-weight: bold;
+        }
+
+        input[type="checkbox"] {
+          margin-top: 5px;
+        }
     </style>
     </head>
     <body>
         <button style="position: fixed; top: 20px; right: 20px; padding: 12px; background-color: #ff0000; border: none; color: #fff; font-size: 16px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);" onclick="window.location.href='login'">Logout</button>
         <div class="container">
-            <h1 class="title">Criar Curso</h1>
-            <a href="adminMainMenu">Main Menu</a> > <a href="docenteManager">Gestão de Docentes</a> > Criar Docente
+            <h1 class="title">Criar Docente</h1>
+            <a href="adminMainMenu">Menu Principal</a> > <a href="docenteManager">Gestão de Docentes</a> > Criar Docente
             <p style="color: red" id="errorMessage"> </p>
             <div class="form-container">
                 <form id="createDocenteForm">
-                    <input type="text" name="email" class="form-input" placeholder="Email">
-                    <input type="text" name="nome" class="form-input" placeholder="Nome">
-                    <input type="number" name="idade" class="form-input" placeholder="Idade">
-                    <input type="text" name="numero" class="form-input" placeholder="Numero">
-                    <input type="text" name="genero" class="form-input" placeholder="Genero">
-                    <input type="text" name="departamento" class="form-input" placeholder="Departamento">
-                    <input type="password" name="senha" class="form-input" placeholder="Password">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input id="email" type="text" name="email" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Nome</label>
+                        <input id="nome" type="text" name="nome" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Idade</label>
+                        <input id="idade" type="number" name="idade" class="form-input">
+                    </div>   
+                    <div class="form-group">
+                        <label for="email">Numero/Identificador Mecanográfico</label>
+                        <input id="numero" type="text" name="numero" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Genero</label>
+                        <select id="genero" name="genero" class="form-select">
+                            <option value="M">M</option>
+                            <option value="F">F</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Departamento</label>
+                        <input id="departamento" type="text" name="departamento" class="form-input">
+                    </div>   
+                    <div class="form-group">
+                        <label for="email">Password</label>
+                        <input id="senha" type="password" name="senha" class="form-input">
+                    </div> 
                     <div class="form-buttons">
                         <button class="cancel-button" type="button" onclick="goBack()">Cancelar</button>
                         <button class="create-button" type="button" onclick="createCurso()">Criar</button>
@@ -126,26 +175,32 @@
 
                 var dataString = email + "//" + nome + "//" + idade + "//" + numero + "//" + senha + "//" + departamento + "//" + genero;
                 const url = window.location.href;
-                fetch(url, {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'JSESSIONID': '${pageContext.session.id}'
-                    },
-                    body: JSON.stringify(dataString)
-                  })
-                  .then(response => response.text())
-                  .then(isValid => {
-                      if(isValid === "true\n") goBack();
-                      else{
-                          var errorMessage = document.getElementById("errorMessage");
-                          errorMessage.textContent = "Erro ao criar docente. Já existe um docente com o email " + email;
-                      }
-                    })
-                  .catch(error => {
-                    // Handle network error
-                    console.error('Network error:', error);
-                  });
+                if(!dataString.split("//").some(element => element === "NaN" || element === "")){ 
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                          'JSESSIONID': '${pageContext.session.id}'
+                        },
+                        body: JSON.stringify(dataString)
+                      })
+                      .then(response => response.text())
+                      .then(isValid => {
+                          if(isValid === "true\n") goBack();
+                          else{
+                              var errorMessage = document.getElementById("errorMessage");
+                              errorMessage.textContent = "Erro ao criar docente. Já existe um docente com o email " + email;
+                          }
+                        })
+                      .catch(error => {
+                        // Handle network error
+                        console.error('Network error:', error);
+                      });
+                    }
+                    else{
+                        var errorMessage = document.getElementById("errorMessage");
+                        errorMessage.textContent = "Erro ao criar docente. Um ou mais campos em falta";
+                    }
                 }
         </script>
     </body>

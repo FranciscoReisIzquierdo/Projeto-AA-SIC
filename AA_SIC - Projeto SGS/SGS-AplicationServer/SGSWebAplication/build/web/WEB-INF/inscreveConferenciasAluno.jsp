@@ -131,9 +131,21 @@
             input[readonly] {
                 pointer-events: none;
             }
+            
+            .data-table tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
         </style>
     </head>
     <script>
+        function expandcolumn(id, size){
+            document.getElementById(id).style.width=size;
+        }
+        
+        function shrinkcolumn(id){
+            document.getElementById(id).style.width="";
+        }
+        
       function submitChanges(entrada, email, codigoConf) {
             const url = window.location.href; // Get the current URL
             var data;
@@ -174,7 +186,7 @@
             <h1>Inscrição em Conferências</h1>
         </div>
         <div class="main-menu">
-            <a href="alunoMainMenu" style="margin-left:15px">Aluno Main Menu</a> > Inscrição em Conferências
+            <a href="alunoMainMenu" style="margin-left:15px">Menu Principal</a> > Inscrição em Conferências
         </div>
         <p id= "confirmMessage" style="width: 100%; text-align: center; color: green"> </p>
         <p id= "errorMessage" style="width: 100%; text-align: center; color: red"> </p>
@@ -182,14 +194,14 @@
             <table class="data-table">
                 <tr>
                     <th>Inscrito</th>
-                    <th onmouseover="this.style.width = '200px'" onmouseout="this.style.width = ''">Codigo</th>
-                    <th onmouseover="this.style.width = '300px'" onmouseout="this.style.width = ''">Nome</th>
-                    <th onmouseover="this.style.width = '200px'" onmouseout="this.style.width = ''">Dia/Hora de Inicio</th>
-                    <th onmouseover="this.style.width = '200px'" onmouseout="this.style.width = ''">Dia/ Hora de Fim</th>
+                    <th id="columncodigo">Codigo</th>
+                    <th id="columnname">Nome</th>
+                    <th id="columnhorainicio">Dia/Hora de Inicio</th>
+                    <th id="columnhorafim">Dia/Hora de Fim</th>
                     <th>Sala</th>
                     <th>Descrição</th>
-                    <th onmouseover="this.style.width = '250px'" onmouseout="this.style.width = ''">Orador</th>
-                    <th onmouseover="this.style.width = '250px'" onmouseout="this.style.width = ''">Tema</th>
+                    <th id="columnorador">Orador</th>
+                    <th id="columntema">Tema</th>
                 </tr>
                 <% List<sgs.Conferencia> rows = (List<sgs.Conferencia>) request.getAttribute("allConferencias");
                 if (rows != null) {
@@ -204,11 +216,11 @@
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="entrada-<%= row.getCodigo() %>" type="checkbox" <%= row.inscritos.contains((sgs.Utilizador) session.getAttribute("Aluno")) ? "checked" : "unchecked" %> onchange="submitChanges(this, '<%=(String) session.getAttribute("Email")%>', '<%= row.getCodigo() %>')">
                             </td>
                             <% } %>
-                            <td id="codigo-<%= row.getCodigo() %>"><%= row.getCodigo() %></td>
-                            <td>
+                            <td onmouseover="expandcolumn('columncodigo', '200px');" onmouseout="shrinkcolumn('columncodigo');" id="codigo-<%= row.getCodigo() %>"><%= row.getCodigo() %></td>
+                            <td onmouseover="expandcolumn('columnname', '350px');" onmouseout="shrinkcolumn('columnname');">
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="nome-<%= row.getCodigo() %>" type="text" value="<%= row.getNome() %>" readonly>
                             </td>
-                            <td>
+                            <td onmouseover="expandcolumn('columnhorainicio', '200px');" onmouseout="shrinkcolumn('columnhorainicio');">
                                 <% 
                                     java.util.Date dateInicio = new java.util.Date(row.getHoraInicio());
                                     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
@@ -216,7 +228,7 @@
                                 %>
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="horaInicio-<%= row.getCodigo() %>" type="datetime-local" value="<%= formattedDateInicio %>" readonly>
                             </td>
-                            <td>
+                            <td onmouseover="expandcolumn('columnhorafim', '200px');" onmouseout="shrinkcolumn('columnhorafim');">
                                 <% 
                                     java.util.Date date = new java.util.Date(row.getHoraFim());
                                     String formattedDate = sdf.format(date);  
@@ -229,10 +241,10 @@
                             <td>
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="descricao-<%= row.getCodigo() %>" type="text" value="<%= row.getDescrição() %>" readonly>
                             </td>
-                            <td>
+                            <td onmouseover="expandcolumn('columnorador', '400px');" onmouseout="shrinkcolumn('columnorador');">
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="orador-<%= row.getCodigo() %>" type="text" value="<%= row.getOrador() %>" readonly>
                             </td>
-                            <td>
+                            <td onmouseover="expandcolumn('columntema', '300px');" onmouseout="shrinkcolumn('columntema');">
                                 <input class="cell-content" style="background: transparent;border: none;font-family: Arial, sans-serif; font-size: 16px" id="tema-<%= row.getCodigo() %>" type="text" value="<%= row.getTema() %>" readonly>
                             </td>
                         </tr>

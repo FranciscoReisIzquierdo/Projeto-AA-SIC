@@ -51,6 +51,7 @@
             .data-table {
                 width: 100%;
                 border-collapse: collapse;
+                word-wrap: break-word;
             }
 
             .data-table th,
@@ -82,6 +83,22 @@
             .data-table td.buttons button:hover {
                 background-color: #45a049;
             }
+            
+            input{
+                height: 15px;
+                width: 100%;
+                max-width: 100%;
+                overflow-x: hidden;
+                text-align: center;
+            }
+            
+            th, td {
+                text-align: center;
+                padding: 8px;
+                word-wrap: break-word;
+                height: 15px;
+            }
+            
             .fixed-buttons {
             position: fixed;
             bottom: 20px;
@@ -104,6 +121,10 @@
             }
             input:focus {
                 outline: none;
+            }
+            
+            .data-table tr:nth-child(even) {
+                background-color: #f9f9f9;
             }
         </style>
     </head>
@@ -193,7 +214,7 @@
             <h1>Gestão de Salas</h1>
         </div>
         <div class="main-menu">
-            <a href="adminMainMenu" style="margin-left:15px">Main Menu</a> > Gestão de Salas
+            <a href="adminMainMenu" style="margin-left:15px">Menu Principal</a> > Gestão de Salas
         </div>
         <p id= "confirmMessage" style="width: 100%; text-align: center; color: green"> </p>
         <% if (session.getAttribute("createdSala") != null) {
@@ -224,7 +245,7 @@
                             <td class="buttons">
                                 <button id="editButton-<%= row.getCodigo() %>" type="button" onclick="toggleEdit('<%= row.getCodigo() %>')">Edit</button>
                                     <input type="hidden" name="codigo" value="<%= row.getCodigo() %>">
-                                <button type="button" onclick="confirmDelete('<%= row.getCodigo() %>')">Delete</button>
+                                <button style="background-color: red; color: #fff" type="button" onclick="confirmDelete('<%= row.getCodigo() %>')">Delete</button>
                             </td>
                         </tr>
                     <% }
@@ -233,7 +254,7 @@
         </div>
         <div class="fixed-buttons">
             <button onclick="window.location.href='criarSala'">Criar Sala</button>
-            <button onclick="window.location.href='adminMainMenu'">Voltar</button>
+            <button style="background-color: #ccc; color: #fff" onclick="window.location.href='adminMainMenu'">Voltar</button>
         </div>
     </body>
 </html>

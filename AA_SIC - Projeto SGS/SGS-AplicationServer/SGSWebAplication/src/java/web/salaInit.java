@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import beans.salaBeanLocal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -21,6 +23,9 @@ import beans.salaBeanLocal;
  */
 @WebServlet(name = "salaInit", urlPatterns = {"/salaInit"})
 public class salaInit extends HttpServlet {
+
+    @EJB
+    private salaBeanLocal salaBean;
 
     @EJB
     private salaBeanLocal salaBeans;
@@ -38,6 +43,12 @@ public class salaInit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        List<sgs.Sala> allSalas = salaBean.getAllSalas();
+            List<String> allSalasCodigos = new ArrayList<>();
+            for(sgs.Sala sala : allSalas) allSalasCodigos.add(sala.getCodigo());
+            request.setAttribute("allSalasCodigos", allSalasCodigos);
+        
         request.getRequestDispatcher("/WEB-INF/salaInit.jsp").forward(request, response);
     }
 
