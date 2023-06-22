@@ -352,7 +352,7 @@
                                 <button id="presencasButton-<%= row.getCodigo() %>" type="button" onclick="window.location.href='consultarPresencas/?codAula=<%=row.getCodigo()%>'">Presenças</button>
                                 <% } %>
                                 <input type="hidden" name="codigo" value="<%= row.getCodigo() %>">
-                                <button style="background-color: red; color: #fff" type="button" onclick="confirmDelete('<%= row.getCodigo() %>')">Delete</button>
+                                <button style="background-color: red; color: #fff; margin-top: 5px;" type="button" onclick="confirmDelete('<%= row.getCodigo() %>')">Delete</button>
                             </td>
                         </tr>
                     <% }
